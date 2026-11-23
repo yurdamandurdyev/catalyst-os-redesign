@@ -32,9 +32,14 @@
   const observer = new IntersectionObserver(entries => entries.forEach(entry => {
     if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
   }), { threshold: .1 });
-  $$('.about-grid, .principles > div, .product-heading, .product-stats, .demo, .journal-heading, .access-layout').forEach(el => {
+  $$('.about-grid, .principles > div, .product-heading, .product-stats, .journal-heading, .access-layout').forEach(el => {
     el.classList.add('reveal'); observer.observe(el);
   });
+  const demoObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+    entry.target.classList.toggle('playing', entry.isIntersecting);
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  }), { threshold: .4 });
+  $$('.demo').forEach(el => { el.classList.add('reveal'); demoObserver.observe(el); });
 
   $('.call-wave').innerHTML = Array.from({ length: 50 }, (_, i) => `<i style="--height:${12 + Math.abs(Math.sin(i * 1.7) * Math.cos(i * .3)) * 85}%;--delay:${i * .012}s"></i>`).join('');
 
