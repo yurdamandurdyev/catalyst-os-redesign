@@ -21,10 +21,9 @@
     scrollQueued = false;
     if (reduced) return;
     const progress = Math.min(1, Math.max(0, -hero.getBoundingClientRect().top / Math.max(1, hero.offsetHeight - stage.offsetHeight)));
-    stage.style.setProperty('--name-y', `${30 - progress * 45}px`);
-    stage.style.setProperty('--last-y', `${75 * (1 - progress)}px`);
+    stage.style.setProperty('--name-y', `${32 - progress * 48}px`);
+    stage.style.setProperty('--last-y', `${76 * (1 - progress)}px`);
     stage.style.setProperty('--name-opacity', String(.08 + progress * .92));
-    stage.style.setProperty('--portrait-scale', String(1 + progress * .045));
   };
   addEventListener('scroll', () => { if (!scrollQueued) { scrollQueued = true; requestAnimationFrame(updateHero); } }, { passive: true });
   addEventListener('resize', updateHero);
@@ -75,7 +74,7 @@
     const atEnd = gallery.scrollLeft >= gallery.scrollWidth - gallery.clientWidth - 3;
     galleryIndex = atEnd ? slides.length - 1 : Math.round(gallery.scrollLeft / step);
     $('#galleryNumber').textContent = String(galleryIndex + 1).padStart(2, '0');
-    $('.gallery-counter i').style.width = `${(galleryIndex + 1) / slides.length * 100}%`;
+    $('.gallery-counter i').style.transform = `scaleX(${(galleryIndex + 1) / slides.length})`;
   }, { passive: true });
 
 })();
