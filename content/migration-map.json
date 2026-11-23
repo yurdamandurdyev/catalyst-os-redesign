@@ -1,0 +1,26 @@
+{
+  "source": "https://catalystos.ru/",
+  "sourceData": ["https://catalystos.ru/site/tpl/catalystos-home/data.json", "https://catalystos.ru/site/home.json"],
+  "capturedOn": "2026-11-23",
+  "renderedHomepage": [
+    {"block": "Header and login", "destination": ".header, #mobileNav", "preserved": "EFP, OS, course and login destinations"},
+    {"block": "Hero", "destination": "#top, #free, .blue-band", "preserved": "Author identity, core offer, company-context premise, 200+ students, slogan and path CTA; approved layered photo retained"},
+    {"block": "Three paths", "destination": "#start", "preserved": "Audience, description, price, CTA and destination for EFP, OS and course; original demo bot and subscription note"},
+    {"block": "Two-question chooser", "destination": "#chooser", "preserved": "Both questions, all five options, all six routing combinations and chat+ready hint"},
+    {"block": "Free start and optional upgrades", "destination": "#roadmap", "preserved": "Demo 0 RUB, full file 990 RUB once, OS 9900 RUB/month, course 29900 RUB; optional branches and all links"},
+    {"block": "Cardiologist without test results", "destination": "#context", "preserved": "Original analogy and common requirement for company context"},
+    {"block": "Author", "destination": "#about", "preserved": "Denis Leushin, entrepreneur and PLEADA owner; agency agents, 10+ developers, 200+ students and two cohorts"},
+    {"block": "Participant cases", "destination": ".case-studies", "preserved": "Both participants, roles, cohorts, case types, outcomes, self-reported qualifications, work durations, help and original source details"},
+    {"block": "Final choice", "destination": ".final-paths", "preserved": "Original heading and three product destinations"},
+    {"block": "Footer", "destination": ".full-footer", "preserved": "Product navigation, support, Denis channel and all four legal documents"}
+  ],
+  "additionalCanonicalContent": [
+    {"block": "Connection steps", "destination": "#how", "items": 3},
+    {"block": "Business niches", "destination": "#tasks", "items": 11},
+    {"block": "Subscription periods", "destination": "#access", "items": 6, "note": "Exact upfront prices from account_funnel.plans; monthly equivalent explicitly labeled"},
+    {"block": "Course access and gifts", "destination": ".course-reminder", "note": "Separate course, 12-month access, full file and one month of OS"},
+    {"block": "FAQ", "destination": "#faq", "items": 8}
+  ],
+  "retainedRedesignFeatures": ["Layered portrait and scroll typography", "Light and dark themes", "Three interactive product demos", "Photo gallery", "Contact block"],
+  "assetTreatment": "Real supplied photos and source student portraits. Original decorative cartoon images are replaced by CSS diagrams, preserving each section's content and purpose."
+}

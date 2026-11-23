@@ -78,12 +78,4 @@
     $('.gallery-counter i').style.width = `${(galleryIndex + 1) / slides.length * 100}%`;
   }, { passive: true });
 
-  $$('[data-plan]').forEach(button => button.addEventListener('click', () => {
-    const team = button.dataset.plan === 'team';
-    $$('[data-plan]').forEach(item => { const active = item === button; item.classList.toggle('active', active); item.setAttribute('aria-pressed', String(active)); });
-    $('#planPrice').textContent = team ? '29 900' : '9 900';
-    $('#planDescription').textContent = team ? 'До пяти доступов для команды и клиентских проектов.' : 'Один доступ для своих проектов и компании.';
-    $('#planFeature').textContent = team ? 'Клиентские проекты и приоритетная поддержка' : 'Решения для своей работы';
-    if (!reduced) $('.price').animate([{ opacity: .3, transform: 'translateY(5px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 350, easing: 'ease-out' });
-  }));
 })();
