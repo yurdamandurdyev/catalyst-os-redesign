@@ -1,470 +1,55 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Catalyst OS — твою задачу уже решали</title>
-<meta name="description" content="Catalyst OS — библиотека готовых наработок: экраны, скиллы, инструкции. Твоя нейросеть берёт их по MCP и собирает решение на твоих данных. Подписка от 9 900 ₽ в месяц.">
-<meta name="theme-color" content="#05060b">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2305060b'/%3E%3Cpath d='M32 12a20 20 0 1 0 0 40 20 20 0 0 0 17-30' fill='none' stroke='%233b6cff' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='49' cy='15' r='5' fill='%236ea8ff'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="css/fonts.css">
-<link rel="stylesheet" href="css/styles.css">
-<script>document.documentElement.classList.add('js');</script>
-<script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f5f5f2">
+  <title>Денис Леушин · Catalyst OS</title>
+  <meta name="description" content="Денис Леушин. ИИ для реальных задач бизнеса. Catalyst OS — библиотека готовых решений, навыков и AI-сотрудников.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%231b4dff'/%3E%3Cpath d='M27 13a10 10 0 1 0 0 14' fill='none' stroke='white' stroke-width='5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('catalyst-theme-v3')||'light'}catch(e){}</script>
 </head>
 <body>
-
-<!-- ===== PRELOADER ===== -->
-<div class="preloader" id="preloader">
-  <div class="preloader__inner">
-    <div class="preloader__logo">CATALYST<span>OS</span></div>
-    <div class="preloader__bar"><i id="preloaderBar"></i></div>
-    <div class="preloader__pct"><span id="preloaderPct">0</span>%</div>
-    <div class="preloader__tag">загружаем полку готовых решений</div>
-  </div>
-</div>
-
-<!-- ===== WEBGL BACKGROUND ===== -->
-<canvas id="gl" aria-hidden="true"></canvas>
-<div class="aurora" aria-hidden="true"><i class="aurora__a"></i><i class="aurora__b"></i><i class="aurora__c"></i></div>
-<div class="grain" aria-hidden="true"></div>
-<div class="cursor" id="cursor" aria-hidden="true"><i class="cursor__dot"></i><i class="cursor__ring"></i></div>
-
-<!-- ===== NAV ===== -->
-<header class="nav" id="nav">
-  <div class="nav__inner">
-    <a class="nav__brand" href="#top" data-cursor>
-      <svg class="nav__mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><path d="M32 12a20 20 0 1 0 0 40 20 20 0 0 0 17-30" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><circle cx="49" cy="15" r="5" fill="#6ea8ff"/></svg>
-      <span>Catalyst<b>OS</b></span>
-    </a>
-    <nav class="nav__links" aria-label="Основная навигация">
-      <a href="#departments" data-cursor>ИИ-сотрудники</a>
-      <a href="#how" data-cursor>Подключение</a>
-      <a href="#pricing" data-cursor>Тарифы</a>
-      <a href="#faq" data-cursor>Вопросы</a>
-    </nav>
-    <div class="nav__actions">
-      <a class="nav__login" href="/lk/login" data-cursor>Войти</a>
-      <a class="btn btn--sm btn--primary magnetic" href="/lk/payments/ui" data-cursor><span>Подписка</span></a>
-      <button class="nav__burger" id="burger" aria-label="Меню" aria-expanded="false"><i></i><i></i></button>
-    </div>
-  </div>
+<header class="header">
+  <a class="logo" href="#top" aria-label="Catalyst OS — на главную"><span class="logo-symbol">c.</span><span>catalyst<sup>os</sup></span></a>
+  <nav aria-label="Навигация"><a href="#about">О Денисе</a><a href="#product">Catalyst OS</a><a href="#journal">В деле</a></nav>
+  <div class="header-actions"><button class="theme-switch" aria-label="Включить тёмную тему" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14A8 8 0 0 1 10 4a8 8 0 1 0 10 10Z"/></svg></button><a class="header-contact" href="https://t.me/deniscatalyst" target="_blank" rel="noopener">На связи <span>↗</span></a></div>
 </header>
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#departments">ИИ-сотрудники</a>
-  <a href="#how">Подключение</a>
-  <a href="#pricing">Тарифы</a>
-  <a href="#faq">Вопросы</a>
-  <a href="/lk/login">Войти</a>
-  <a class="btn btn--primary" href="/lk/payments/ui"><span>Оформить подписку</span></a>
-</div>
-
-<main id="top">
-
-<!-- ===== HERO ===== -->
-<section class="hero" id="hero">
-  <div class="container hero__grid">
-    <div class="hero__copy">
-      <div class="chip hero__kicker" data-reveal><i class="chip__pulse"></i><span class="scramble" data-text="БИБЛИОТЕКА ГОТОВЫХ РЕШЕНИЙ">БИБЛИОТЕКА ГОТОВЫХ РЕШЕНИЙ</span></div>
-      <h1 class="hero__title">
-        <span class="line"><span class="word">Твою</span> <span class="word">задачу</span></span>
-        <span class="line"><span class="word">уже</span> <span class="word">решали.</span></span>
-        <span class="line line--accent"><span class="word">Забирай</span> <span class="word">готовое.</span></span>
-      </h1>
-      <p class="hero__sub" data-reveal>Catalyst OS — библиотека моих наработок: экраны, скиллы, инструкции. Твоя нейросеть берёт их по&nbsp;MCP и собирает решение на твоих данных.</p>
-      <div class="hero__cta" data-reveal>
-        <a class="btn btn--primary btn--lg magnetic" href="/lk/payments/ui" data-cursor><span>Оформить подписку · 9 900 ₽/мес</span><svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <a class="btn btn--ghost btn--lg magnetic" href="#how" data-cursor><span>Как подключить</span><svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 5v14m-6-6 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      </div>
-      <div class="hero__meta" data-reveal>
-        <span><b>Не с нуля.</b> С полки.</span>
-        <span class="hero__meta-sep"></span>
-        <span>Cursor · Claude Code · Codex · ChatGPT</span>
-      </div>
-    </div>
-
-    <div class="hero__visual" data-reveal>
-      <div class="hero__ring" aria-hidden="true"></div>
-      <figure class="photo-card tilt" id="heroCard" data-cursor>
-        <div class="photo-card__glow"></div>
-        <img src="assets/img/hero.webp" alt="Денис указывает в камеру — твоя задача уже решена" width="1500" height="1000" fetchpriority="high">
-        <figcaption class="photo-card__cap"><b>Денис Леушин</b><span>автор Catalyst OS</span></figcaption>
-        <div class="photo-card__shine"></div>
-      </figure>
-      <div class="float-chip float-chip--1" data-float><i>370+</i> скиллов</div>
-      <div class="float-chip float-chip--2" data-float><i>MCP</i> подключение</div>
-      <div class="float-chip float-chip--3" data-float><i>100+</i> ИИ-сотрудников</div>
-    </div>
-  </div>
-  <a class="hero__scroll" href="#numbers" aria-label="Листай вниз" data-cursor><span></span></a>
+<main>
+<section class="hero" id="top" aria-labelledby="hero-title">
+ <div class="hero-stage">
+  <div class="hero-topline"><span>ДЕНИС ЛЕУШИН / ОСНОВАТЕЛЬ CATALYST OS</span><span>ИИ. ПРОЦЕССЫ. ЛЮДИ.</span></div>
+  <h1 id="hero-title" class="hero-name"><span>ДЕНИС</span><span class="last-name">ЛЕУШИН</span></h1>
+  <div class="hero-portrait"><img src="assets/img/denis-cutout.png" alt="Денис Леушин с микрофоном на выступлении" fetchpriority="high" width="1024" height="1536"></div>
+  <div class="hero-note"><span class="small-label">ПРАКТИК, АВТОР, СОЗДАТЕЛЬ</span><p>Помогаю бизнесу<br>работать с ИИ.<br><b>На практике.</b></p><span class="hero-note-line"></span></div>
+  <div class="hero-action"><span class="hero-index">/ 01</span><p>Всё, что уже собрал,<br>упаковал в Catalyst OS.</p><a class="round-link" href="#product"><span>Смотреть продукт</span><i>↗</i></a></div>
+  <div class="hero-bottom"><span>ЛИСТАЙ — ПОКАЖУ, ЧТО ВНУТРИ</span><span class="scroll-arrow">↓</span><span>ОТ ЗАДАЧИ — К РЕШЕНИЮ</span></div>
+ </div>
 </section>
-
-<!-- ===== MARQUEE ===== -->
-<div class="marquee" aria-hidden="true">
-  <div class="marquee__track">
-    <span>1 200+ наработок</span><i>✦</i><span>370+ скиллов</span><i>✦</i><span>100+ ИИ-сотрудников</span><i>✦</i><span>MCP-подключение</span><i>✦</i><span>экраны и инструкции</span><i>✦</i><span>российские CRM</span><i>✦</i><span>телефония</span><i>✦</i>
-    <span>1 200+ наработок</span><i>✦</i><span>370+ скиллов</span><i>✦</i><span>100+ ИИ-сотрудников</span><i>✦</i><span>MCP-подключение</span><i>✦</i><span>экраны и инструкции</span><i>✦</i><span>российские CRM</span><i>✦</i><span>телефония</span><i>✦</i>
-  </div>
-</div>
-
-<!-- ===== NUMBERS ===== -->
-<section class="section" id="numbers">
-  <div class="container">
-    <header class="section__head" data-reveal>
-      <span class="eyebrow scramble" data-text="CATALYST OS В ЦИФРАХ">CATALYST OS В ЦИФРАХ</span>
-      <h2 class="section__title">Что внутри</h2>
-      <p class="section__sub">Решение под задачу: скилл и экран вместе.</p>
-    </header>
-    <div class="numbers">
-      <article class="num-card tilt" data-reveal data-cursor><div class="num-card__val"><span data-count="1200">0</span>+</div><div class="num-card__label">наработок</div><p>экраны, скиллы, элементы и инструкции</p><i class="num-card__idx">01</i></article>
-      <article class="num-card tilt" data-reveal data-cursor><div class="num-card__val"><span data-count="370">0</span>+</div><div class="num-card__label">скиллов</div><p>в рабочем наборе Catalyst</p><i class="num-card__idx">02</i></article>
-      <article class="num-card tilt" data-reveal data-cursor><div class="num-card__val"><span data-count="100">0</span>+</div><div class="num-card__label">ИИ-сотрудников</div><p>под задачи бизнеса</p><i class="num-card__idx">03</i></article>
-      <article class="num-card tilt" data-reveal data-cursor><div class="num-card__val num-card__val--txt">CRM</div><div class="num-card__label">инструкции</div><p>российские CRM и телефония</p><i class="num-card__idx">04</i></article>
-    </div>
-    <p class="numbers__note" data-reveal>подписка для своих проектов и компании</p>
-  </div>
+<div class="blue-band"><span>Человеческий опыт.<br><b>Возможности искусственного интеллекта.</b></span><svg viewBox="0 0 80 80" aria-hidden="true"><path d="M10 40h60M40 10v60M19 19l42 42M19 61l42-42"/></svg><span class="band-note">CATALYST OS<br>СИСТЕМА ДЛЯ ВАШИХ ЗАДАЧ</span></div>
+<section class="section about" id="about">
+ <div class="section-kicker"><span>01 — ЗНАКОМСТВО</span><span>ДЕНИС ЛЕУШИН</span></div>
+ <div class="about-grid"><h2>Хватит говорить<br>про возможности.<br><span>Пора делать.</span></h2><div class="about-copy"><p>У каждой компании свои задачи. У нейросети — возможности. Между ними нужны контекст, инструменты и понятный рабочий процесс.</p><p>Я собираю такие решения и делюсь своими наработками в Catalyst OS. Чтобы вы могли взять готовую основу и адаптировать её под свой бизнес.</p><a class="inline-link" href="https://t.me/deniscatalyst" target="_blank" rel="noopener">Мой Telegram <span>↗</span></a></div></div>
+ <div class="principles"><div><span>01</span><h3>Начинаем с задачи</h3><p>Что занимает время? Где теряются данные? Что команда делает руками?</p></div><div><span>02</span><h3>Собираем решение</h3><p>Инструменты, навыки и данные компании — в одном рабочем процессе.</p></div><div><span>03</span><h3>Проверяем на практике</h3><p>Рабочий результат, который можно оценить и повторить на новых данных.</p></div></div>
 </section>
-
-<!-- ===== FORMULA ===== -->
-<section class="section section--tight" id="formula">
-  <div class="container">
-    <div class="formula" data-reveal>
-      <div class="formula__node"><i class="formula__ico">🧠</i><b>Лучшая нейросеть</b><span>любая твоя</span></div>
-      <div class="formula__op">+</div>
-      <div class="formula__node formula__node--hot"><i class="formula__ico">⚡</i><b>Catalyst OS</b><span>1 200+ наработок</span></div>
-      <div class="formula__op">+</div>
-      <div class="formula__node"><i class="formula__ico">📁</i><b>Контекст компании</b><span>Единый файл правды</span></div>
-      <div class="formula__op formula__op--eq">=</div>
-      <div class="formula__result"><b>решение</b><span>под твой бизнес</span></div>
-    </div>
-  </div>
+<section class="product" id="product">
+ <div class="section-kicker"><span>02 — МОЙ ПРОДУКТ</span><span class="status-dot">CATALYST OS</span></div>
+ <div class="product-heading"><h2>Твою задачу<br>уже <em>решали.</em></h2><div><p>Готовые экраны, навыки и инструкции.<br>Твоя нейросеть берёт нужное по MCP<br>и собирает решение на твоих данных.</p><a class="button white" href="#access">Забрать готовое <span>↗</span></a></div></div>
+ <div class="product-stats"><div><strong>1 200<span>+</span></strong><span>ГОТОВЫХ НАРАБОТОК</span></div><div><strong>370<span>+</span></strong><span>НАВЫКОВ ДЛЯ АГЕНТОВ</span></div><div><strong>100<span>+</span></strong><span>ИИ-СОТРУДНИКОВ</span></div></div>
+ <div class="demo"><div class="demo-top"><span><b class="demo-logo">c.</b> Рабочее пространство</span><span class="demo-label">ИНТЕРАКТИВНЫЙ ПРИМЕР</span></div><div class="demo-layout"><div class="demo-nav" role="tablist" aria-label="Примеры решений"><button id="tab-finance" role="tab" aria-selected="true" aria-controls="panel-finance" data-demo="finance"><span>◫</span> Финансы <i>↗</i></button><button id="tab-sales" role="tab" aria-selected="false" aria-controls="panel-sales" data-demo="sales"><span>↗</span> Продажи <i>↗</i></button><button id="tab-calls" role="tab" aria-selected="false" aria-controls="panel-calls" data-demo="calls"><span>≋</span> Разбор звонка <i>↗</i></button><div class="demo-sidebar-note">Ваша нейросеть.<br>Ваш контекст.<br><b>Готовые инструменты.</b></div></div>
+ <div class="demo-content"><div id="panel-finance" class="demo-panel" role="tabpanel" aria-labelledby="tab-finance"><div class="report-heading"><div><small>ФИНАНСОВЫЙ ОБЗОР</small><h3>Неделя в цифрах</h3></div><span class="report-period">19 — 25 сентября</span></div><div class="report-metrics"><div><span>Продажи</span><strong>1 840 000 <small>₽</small></strong></div><div><span>Поступления</span><strong>1 520 000 <small>₽</small></strong></div></div><div class="chart-heading"><span>Продажи по источникам</span><span><i></i> Сумма заказов</span></div><div class="bar-chart"><div><span>Салон</span><div><i style="--bar:100%"></i></div><b>680 000 ₽</b></div><div><span>Сайт</span><div><i style="--bar:79.4%"></i></div><b>540 000 ₽</b></div><div><span>Повторные</span><div><i style="--bar:91.2%"></i></div><b>620 000 ₽</b></div></div><p class="report-insight"><span>↗</span> 320 000 ₽ ещё не поступили. Проверьте неоплаченные заказы.</p></div>
+ <div id="panel-sales" class="demo-panel" role="tabpanel" aria-labelledby="tab-sales" hidden><div class="report-heading"><div><small>КОНТРОЛЬ ПРОДАЖ</small><h3>От заявки до сделки</h3></div><span class="report-period">Демо-данные</span></div><div class="report-metrics"><div><span>Новые обращения</span><strong>124</strong></div><div><span>Закрытые сделки</span><strong>28</strong></div></div><div class="funnel"><div style="--width:100%"><span>Заявки</span><b>124</b></div><div style="--width:78%"><span>В работе</span><b>97</b></div><div style="--width:52%"><span>Предложение</span><b>65</b></div><div style="--width:32%"><span>Сделки</span><b>28</b></div></div><p class="report-insight"><span>↗</span> Воронка помогает увидеть, на каком этапе теряются клиенты.</p></div>
+ <div id="panel-calls" class="demo-panel" role="tabpanel" aria-labelledby="tab-calls" hidden><div class="report-heading"><div><small>АНАЛИТИКА ЗВОНКОВ</small><h3>Суть разговора — перед глазами</h3></div></div><div class="call-wave" aria-hidden="true"></div><div class="call-summary"><span class="call-status">Встреча назначена</span><p>Клиент сравнивает два проекта. Обсудили бюджет, цель покупки и рассрочку. Договорились об онлайн-показе в четверг в 18:00.</p><div><span>Бюджет уточнён</span><span>Потребность выявлена</span><span>Следующий шаг согласован</span></div></div></div>
+ <p class="demo-disclaimer">Учебный пример интерфейса. Данные демонстрационные, к компании не подключён.</p></div></div></div>
+ <div class="compatible"><span>РАБОТАЕТ С ВАШИМИ ИНСТРУМЕНТАМИ</span><div><b>Claude Code</b><b>Cursor</b><b>Codex</b><b>ChatGPT</b><span>через MCP ↗</span></div></div>
 </section>
-
-<!-- ===== MCP ===== -->
-<section class="section" id="mcp">
-  <div class="container mcp__grid">
-    <div class="mcp__copy">
-      <span class="eyebrow scramble" data-text="КАК ЭТО РАБОТАЕТ" data-reveal>КАК ЭТО РАБОТАЕТ</span>
-      <h2 class="section__title" data-reveal>MCP — это розетка</h2>
-      <p class="section__sub" data-reveal>Твоя нейросеть втыкается в Catalyst и берёт нужное: экран, скилл, инструкцию. Решает сама, что взять. Контекст компании хранится у тебя — в Catalyst уходит только запрос.</p>
-      <div class="mcp__flow" data-reveal>
-        <div class="mcp__step"><i>1</i><span>Твоя нейросеть</span></div>
-        <div class="mcp__wire"><b></b></div>
-        <div class="mcp__step mcp__step--hot"><i>2</i><span>MCP</span></div>
-        <div class="mcp__wire"><b></b></div>
-        <div class="mcp__step"><i>3</i><span>Catalyst OS</span></div>
-        <div class="mcp__wire"><b></b></div>
-        <div class="mcp__step"><i>4</i><span>Готовое в твоей папке</span></div>
-      </div>
-    </div>
-    <figure class="photo-card photo-card--side tilt" data-reveal data-cursor>
-      <div class="photo-card__glow"></div>
-      <img src="assets/img/think.webp" alt="Денис задумался — нейросеть сама выбирает нужное решение" width="1500" height="1000" loading="lazy">
-      <div class="photo-card__shine"></div>
-      <figcaption class="photo-card__badge">контекст остаётся у тебя</figcaption>
-    </figure>
-  </div>
-</section>
-
-<!-- ===== HOW + CONNECTION ===== -->
-<section class="section" id="how">
-  <div class="container">
-    <header class="section__head" data-reveal>
-      <span class="eyebrow scramble" data-text="КАК ПОДКЛЮЧИТЬ">КАК ПОДКЛЮЧИТЬ</span>
-      <h2 class="section__title">Подключается за пару минут</h2>
-      <p class="section__sub">Cursor, Claude Code, Codex и другие нейросети подключаются по ключу, claude.ai и ChatGPT — через OAuth. Порядок показывает кабинет.</p>
-    </header>
-    <div class="steps">
-      <article class="step" data-reveal><i class="step__num">01</i><h3>Ключ в кабинете</h3><p>После оплаты выпусти личный ключ в кабинете.</p></article>
-      <article class="step" data-reveal><i class="step__num">02</i><h3>Одна команда в твою нейросеть</h3><p>Выбери вкладку и добавь подключение.</p></article>
-      <article class="step" data-reveal><i class="step__num">03</i><h3>Проверка: вызови catalyst_overview</h3><p>Пришёл ответ — значит подключено.</p></article>
-    </div>
-
-    <div class="connect" data-reveal>
-      <div class="connect__tabs" role="tablist" aria-label="Клиенты MCP">
-        <button class="connect__tab is-active" role="tab" aria-selected="true" data-tab="claude" data-cursor>Claude Code</button>
-        <button class="connect__tab" role="tab" aria-selected="false" data-tab="cursor" data-cursor>Cursor</button>
-        <button class="connect__tab" role="tab" aria-selected="false" data-tab="codex" data-cursor>Codex</button>
-        <button class="connect__tab" role="tab" aria-selected="false" data-tab="oauth" data-cursor>claude.ai и ChatGPT</button>
-      </div>
-      <div class="connect__body">
-        <div class="connect__pane is-active" data-pane="claude">
-          <p class="connect__note">Добавь в терминале. Проверка: <code>claude mcp list</code> или <code>/mcp</code> в сессии.</p>
-          <div class="code"><button class="code__copy" data-copy data-cursor>Скопировать</button><pre><code>claude mcp add --transport http --scope user catalyst https://catalystos.ru/mcp --header "Authorization: Bearer $Catalyst_KEY"</code></pre></div>
-        </div>
-        <div class="connect__pane" data-pane="cursor">
-          <p class="connect__note">Добавь секцию catalyst в <code>.cursor/mcp.json</code> или <code>~/.cursor/mcp.json</code>, сохрани остальные подключения. Проверка: Settings → MCP → catalyst.</p>
-          <div class="code"><button class="code__copy" data-copy data-cursor>Скопировать</button><pre><code>{
-  "mcpServers": {
-    "catalyst": {
-      "url": "https://catalystos.ru/mcp",
-      "headers": { "Authorization": "Bearer ${env:Catalyst_KEY}" }
-    }
-  }
-}</code></pre></div>
-        </div>
-        <div class="connect__pane" data-pane="codex">
-          <p class="connect__note">Добавь в <code>~/.codex/config.toml</code>. Проверка: <code>codex mcp list</code> или <code>/mcp</code> внутри Codex. Если url не поддерживается — обнови Codex.</p>
-          <div class="code"><button class="code__copy" data-copy data-cursor>Скопировать</button><pre><code>[mcp_servers.catalyst]
-url = "https://catalystos.ru/mcp"
-bearer_token_env_var = "Catalyst_KEY"</code></pre></div>
-        </div>
-        <div class="connect__pane" data-pane="oauth">
-          <p class="connect__note">Подключаются через OAuth, порядок показывает кабинет.</p>
-          <a class="btn btn--ghost magnetic" href="/lk/connect/ui" data-cursor><span>Открыть кабинет</span></a>
-        </div>
-        <p class="connect__key">Сначала задай <code>Catalyst_KEY</code> в окружении клиента. Ключ личный: никому не пересылай и не клади в git. <a href="/os/connect#environment" data-cursor>Как задать ключ →</a></p>
-      </div>
-    </div>
-    <p class="how__note" data-reveal>Нейросеть оплачивается отдельно — это твоя подписка. Доступ из РФ и способ оплаты выбранной нейросети проверь до покупки. <a href="/os/connect" data-cursor>Подробная инструкция →</a></p>
-  </div>
-</section>
-
-<!-- ===== DEPARTMENTS ===== -->
-<section class="section" id="departments">
-  <div class="container">
-    <header class="section__head" data-reveal>
-      <span class="eyebrow scramble" data-text="ИИ-СОТРУДНИКИ">ИИ-СОТРУДНИКИ</span>
-      <h2 class="section__title">Кто решает твою задачу</h2>
-      <p class="section__sub">Выбери отдел — увидишь, какие вопросы бизнеса решают его сотрудники. <b id="deptTotal">101</b> сотрудников в 12 отделах.</p>
-    </header>
-    <div class="dept-pills" id="deptPills" role="tablist" aria-label="Отделы" data-reveal></div>
-    <div class="dept-grid" id="deptGrid"></div>
-  </div>
-</section>
-
-<!-- ===== SHELF ===== -->
-<section class="section" id="shelf">
-  <div class="container">
-    <header class="section__head" data-reveal>
-      <span class="eyebrow scramble" data-text="БИБЛИОТЕКА">БИБЛИОТЕКА</span>
-      <h2 class="section__title">Что лежит на полке</h2>
-      <p class="section__sub">Готовые решения, которые нейросеть собирает под твою задачу.</p>
-    </header>
-    <div class="shelf">
-      <article class="shelf-card tilt" data-reveal data-cursor><i class="shelf-card__ico">💰</i><h3>Продажи и деньги за неделю</h3><p>Экран продаж с источниками и пробелами в данных</p><span class="shelf-card__tag">экран</span></article>
-      <article class="shelf-card tilt" data-reveal data-cursor><i class="shelf-card__ico">📞</i><h3>Контроль звонков</h3><p>Разбор звонков с примерами и проверкой по правилам</p><span class="shelf-card__tag">скилл</span></article>
-      <article class="shelf-card tilt" data-reveal data-cursor><i class="shelf-card__ico">⚡</i><h3>Скорость ответа на лид</h3><p>Время от заявки до первого ответа</p><span class="shelf-card__tag">экран</span></article>
-      <article class="shelf-card tilt" data-reveal data-cursor><i class="shelf-card__ico">🔎</i><h3>Воронка по каналам</h3><p>Переходы от заявки к продаже по источникам</p><span class="shelf-card__tag">экран</span></article>
-      <article class="shelf-card tilt" data-reveal data-cursor><i class="shelf-card__ico">📊</i><h3>Сводка собственнику</h3><p>Деньги, источники и недостающие данные на одном экране</p><span class="shelf-card__tag">экран</span></article>
-      <article class="shelf-card tilt" data-reveal data-cursor><i class="shelf-card__ico">📝</i><h3>Тест для менеджеров</h3><p>Вопросы по правилам компании и рабочим ситуациям</p><span class="shelf-card__tag">скилл</span></article>
-    </div>
-  </div>
-</section>
-
-<!-- ===== REPORT DEMO ===== -->
-<section class="section" id="report">
-  <div class="container">
-    <header class="section__head" data-reveal>
-      <span class="eyebrow scramble" data-text="ЖИВОЙ ПРИМЕР">ЖИВОЙ ПРИМЕР</span>
-      <h2 class="section__title">Первый готовый экран</h2>
-      <p class="section__sub">Недельный отчёт собственника. Учебные данные — твои цифры будут свои.</p>
-    </header>
-    <div class="os-window tilt" data-reveal data-cursor>
-      <div class="os-window__bar"><i></i><i></i><i></i><span>report-week · Catalyst OS</span><b>учебные данные</b></div>
-      <div class="os-window__body">
-        <div class="os-window__title"><h3>Недельный отчёт собственника</h3><span>Диван Иваныч · неделя 1</span></div>
-        <div class="kpis">
-          <div class="kpi"><span class="kpi__label">Продажи за неделю</span><b class="kpi__val"><span data-count="1840000" data-format="money">0</span> ₽</b><span class="kpi__base">Салон, сайт и повторные заказы</span><i class="kpi__spark"></i></div>
-          <div class="kpi"><span class="kpi__label">Поступления за неделю</span><b class="kpi__val"><span data-count="1520000" data-format="money">0</span> ₽</b><span class="kpi__base">Оплаты по дате поступления</span><i class="kpi__spark kpi__spark--b"></i></div>
-        </div>
-        <div class="report-grid">
-          <div class="bars" aria-hidden="true">
-            <div class="bar" style="--h:74%"><i></i><span>Салон</span><b>680 000 ₽</b></div>
-            <div class="bar" style="--h:59%"><i></i><span>Сайт</span><b>540 000 ₽</b></div>
-            <div class="bar" style="--h:68%"><i></i><span>Повторные</span><b>620 000 ₽</b></div>
-          </div>
-          <table class="report-table">
-            <thead><tr><th>Источник</th><th>Продажи</th><th>Поступления</th></tr></thead>
-            <tbody>
-              <tr><td>Салон</td><td>680 000 ₽</td><td>560 000 ₽</td></tr>
-              <tr><td>Сайт</td><td>540 000 ₽</td><td>420 000 ₽</td></tr>
-              <tr><td>Повторные</td><td>620 000 ₽</td><td>540 000 ₽</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="os-window__note">Разница 320 000 ₽: часть заказов ещё не оплачена. Учебный пример, к компании не подключён.</p>
-      </div>
-    </div>
-
-    <div class="examples">
-      <article class="example" data-reveal data-cursor>
-        <div class="example__head"><h3>Разбор звонка</h3><span>пример</span></div>
-        <p>Клиент вернулся после звонка 19 сен, сравнивает с соседним проектом. Назвал бюджет и цель, спросил про рассрочку. Договорились на онлайн-показ в четверг, 18:00.</p>
-        <div class="example__facts"><span>Встреча назначена</span><span>Сроки покупки</span><span>Состав семьи</span><span>Район поиска</span><span>Способ оплаты</span></div>
-      </article>
-      <article class="example" data-reveal data-cursor>
-        <div class="example__head"><h3>ГД · сводка</h3><span>пример</span></div>
-        <p>CRM · банк · телефония</p>
-        <div class="example__facts example__facts--col"><span>Выручка по договорам: 68 937 200 ₽</span><span>Сделки: 44 шт</span><span>Поступления: 59 340 000 ₽</span><span>Ответ на заявку: 14 мин · медиана</span></div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ===== PRICING ===== -->
-<section class="section" id="pricing">
-  <div class="container">
-    <header class="section__head" data-reveal>
-      <span class="eyebrow scramble" data-text="ТАРИФЫ">ТАРИФЫ</span>
-      <h2 class="section__title">Выбери свой доступ</h2>
-      <p class="section__sub">Для своей работы или для клиентских проектов. Оплата и продление в кабинете, чек приходит на почту.</p>
-    </header>
-    <div class="period-toggle" id="periodToggle" data-reveal>
-      <button class="is-active" data-period="1" data-cursor>1 месяц</button>
-      <button data-period="3" data-cursor>3 месяца <b>−20%</b></button>
-      <button data-period="12" data-cursor>1 год <b>−30%</b></button>
-      <i class="period-toggle__slider" id="periodSlider"></i>
-    </div>
-    <div class="plans">
-      <article class="plan" data-reveal data-cursor>
-        <div class="plan__badge">для себя</div>
-        <h3 class="plan__name">Индивидуальная</h3>
-        <p class="plan__for">для себя: свои проекты и своя компания</p>
-        <div class="plan__price"><b><span class="plan__num" data-plan="ind">9 900</span> ₽</b><span class="plan__per" id="perInd">в месяц</span></div>
-        <ul class="plan__list">
-          <li>1 доступ</li>
-          <li>1 200+ наработок и обновления</li>
-          <li>370+ скиллов, 100+ ИИ-сотрудников</li>
-          <li>Подключение по MCP за пару минут</li>
-        </ul>
-        <a class="btn btn--ghost btn--block magnetic" href="/lk/payments/ui" data-cursor><span>Оформить подписку</span></a>
-      </article>
-      <article class="plan plan--hot" data-reveal data-cursor>
-        <div class="plan__badge plan__badge--hot">для команды</div>
-        <h3 class="plan__name">Коммерческая</h3>
-        <p class="plan__for">для клиентов, агентства или команды</p>
-        <div class="plan__price"><b><span class="plan__num" data-plan="com">29 900</span> ₽</b><span class="plan__per" id="perCom">в месяц</span></div>
-        <ul class="plan__list">
-          <li>до 5 доступов</li>
-          <li>Всё из индивидуальной</li>
-          <li>Для клиентских проектов</li>
-          <li>Приоритетная поддержка</li>
-        </ul>
-        <a class="btn btn--primary btn--block magnetic" href="/lk/payments/ui" data-cursor><span>Оформить подписку</span></a>
-      </article>
-    </div>
-    <div class="safety" data-reveal>
-      <h3>Без риска</h3>
-      <ul>
-        <li>Контекст компании хранится у тебя</li>
-        <li>Отключить продление можно в кабинете</li>
-        <li>Установленное остаётся после конца доступа</li>
-        <li>Первый запрос к MCP считается оказанной услугой за месяц</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- ===== AFTER ===== -->
-<section class="section section--tight" id="after">
-  <div class="container">
-    <header class="section__head" data-reveal>
-      <span class="eyebrow scramble" data-text="ПОСЛЕ ДОСТУПА">ПОСЛЕ ДОСТУПА</span>
-      <h2 class="section__title">Что будет после оплаты</h2>
-    </header>
-    <div class="after">
-      <div class="after__item" data-reveal><i>1</i><p>Доступ откроется в кабинете <b>catalystos.ru/lk</b>, вход по коду на почту</p></div>
-      <div class="after__item" data-reveal><i>2</i><p>Выпускаешь ключ и подключаешь нейросеть по инструкции</p></div>
-      <div class="after__item" data-reveal><i>3</i><p>Пишешь в поддержку <b>@catalystosbot</b>, если застрял</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== FILTER ===== -->
-<section class="section section--tight" id="filter">
-  <div class="container filter__grid">
-    <div class="filter__copy" data-reveal>
-      <span class="eyebrow eyebrow--warn">ЧЕСТНО</span>
-      <h2 class="section__title">Кому не подойдёт</h2>
-      <ul class="filter__list">
-        <li><i>✕</i> Хочешь «нажал и поехало» без своих данных</li>
-        <li><i>✕</i> Не готов дать ИИ контекст компании</li>
-        <li><i>✕</i> Нужно красиво доложить наверх, что внедрили ИИ</li>
-      </ul>
-    </div>
-    <figure class="photo-card photo-card--filter tilt" data-reveal data-cursor>
-      <div class="photo-card__glow photo-card__glow--warm"></div>
-      <img src="assets/img/serious.webp" alt="Денис серьёзно — Catalyst подходит не всем" width="1000" height="1500" loading="lazy">
-      <div class="photo-card__shine"></div>
-    </figure>
-  </div>
-</section>
-
-<!-- ===== FAQ ===== -->
-<section class="section" id="faq">
-  <div class="container container--narrow">
-    <header class="section__head" data-reveal>
-      <span class="eyebrow scramble" data-text="ВОПРОСЫ">ВОПРОСЫ</span>
-      <h2 class="section__title">Про подключение, контекст и доступ</h2>
-    </header>
-    <div class="faq">
-      <details class="faq__item" data-reveal>
-        <summary data-cursor><span>Подойдёт ли моей нейросети?</span><i></i></summary>
-        <div class="faq__body"><p>Cursor, Claude Code и Codex подключаются по ключу, claude.ai и ChatGPT — через OAuth. Порядок показывает кабинет. Нейросеть оплачивается отдельно. Доступ из РФ и способ оплаты проверь до покупки. Программировать не нужно: ставишь задачу словами. Выбирай одну работу, которую сможешь проверить.</p></div>
-      </details>
-      <details class="faq__item" data-reveal>
-        <summary data-cursor><span>Что если нет файла правды?</span><i></i></summary>
-        <div class="faq__body"><p>Начни с контекста: что продаёшь, какие правила и где данные. Если ChatGPT не зашёл — попробуй на одной задаче со своим контекстом. Файл собирается и хранится у тебя. Ко мне приходит только запрос на метод. Если пользуешься облачной нейросетью, данные идут к её провайдеру, как и сейчас.</p><a href="/efp" data-cursor>Единый файл правды →</a></div>
-      </details>
-      <details class="faq__item" data-reveal>
-        <summary data-cursor><span>Что остаётся после конца доступа?</span><i></i></summary>
-        <div class="faq__body"><p>Установленные решения, код и данные продолжают работать. Перестают приходить обновления, новые скиллы и проверки через Catalyst OS.</p></div>
-      </details>
-      <details class="faq__item" data-reveal>
-        <summary data-cursor><span>Хочу научиться, с чего начать?</span><i></i></summary>
-        <div class="faq__body"><p>На курсе доведёшь одну работу компании до проверенного результата и повтора на новых данных. Подходит разным нишам: выбираешь свою задачу.</p><a href="/kurs" data-cursor>Курс «От чата к агенту» →</a></div>
-      </details>
-    </div>
-  </div>
-</section>
-
-<!-- ===== FINAL CTA ===== -->
-<section class="final" id="final">
-  <div class="container final__grid">
-    <div class="final__copy">
-      <h2 class="final__title" data-reveal>Подключи<br><span>Catalyst OS</span></h2>
-      <p data-reveal>Оформи подписку в кабинете — и твоя нейросеть начнёт брать готовые решения. Не готов? Начни с Единого файла правды.</p>
-      <div class="final__cta" data-reveal>
-        <a class="btn btn--primary btn--lg magnetic" href="/lk/payments/ui" data-cursor><span>Оформить подписку · 9 900 ₽/мес</span></a>
-        <a class="btn btn--ghost btn--lg magnetic" href="/efp" data-cursor><span>Начать с Единого файла правды</span></a>
-      </div>
-    </div>
-    <figure class="photo-card photo-card--final tilt" data-reveal data-cursor>
-      <div class="photo-card__glow photo-card__glow--red"></div>
-      <img src="assets/img/laugh.webp" alt="Денис смеётся — забирай готовое" width="1500" height="1000" loading="lazy">
-      <div class="photo-card__shine"></div>
-      <figcaption class="photo-card__cap"><b>Не с нуля.</b><span>С полки.</span></figcaption>
-    </figure>
-  </div>
-</section>
-
-<!-- ===== CONTACT + FOOTER ===== -->
-<footer class="footer">
-  <div class="container">
-    <div class="contact">
-      <a class="contact__card" href="https://t.me/catalystosbot" target="_blank" rel="noopener" data-reveal data-cursor><i>💬</i><b>Поддержка</b><span>ИИ-куратор ответит сразу, сложный вопрос передаст человеку</span><em>@catalystosbot →</em></a>
-      <a class="contact__card" href="https://t.me/deniscatalyst" target="_blank" rel="noopener" data-reveal data-cursor><i>📣</i><b>Канал Дениса</b><span>Telegram</span><em>@deniscatalyst →</em></a>
-    </div>
-    <div class="footer__bottom">
-      <a class="footer__brand" href="#top" data-cursor><svg viewBox="0 0 64 64" width="26" height="26" aria-hidden="true"><path d="M32 12a20 20 0 1 0 0 40 20 20 0 0 0 17-30" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><circle cx="49" cy="15" r="5" fill="#6ea8ff"/></svg>Catalyst<b>OS</b></a>
-      <nav class="footer__legal" aria-label="Документы">
-        <a href="/legal/oferta" data-cursor>Оферта</a>
-        <a href="/legal/vozvrat" data-cursor>Возврат</a>
-        <a href="/legal/pd" data-cursor>Согласие на обработку ПД</a>
-        <a href="/privacy" data-cursor>Политика конфиденциальности</a>
-      </nav>
-      <span class="footer__copy">© 2026 Catalyst OS</span>
-    </div>
-  </div>
-</footer>
-
+<section class="section journal" id="journal"><div class="section-kicker"><span>03 — В ДЕЛЕ</span><span>ЛЮДИ. ВСТРЕЧИ. РАБОТА.</span></div><div class="journal-heading"><h2>Делаю.<br>Делюсь. <span>Обсуждаю.</span></h2><div class="gallery-controls"><button data-gallery="-1" aria-label="Предыдущее фото">←</button><button data-gallery="1" aria-label="Следующее фото">→</button></div></div><div class="gallery" tabindex="0" aria-label="Фотографии Дениса; листайте стрелками"><figure><img src="assets/img/hero.webp" loading="lazy" alt="Денис рассказывает об ИИ на сцене"><figcaption><span>01 / НА СЦЕНЕ</span><span>Делиться опытом ↗</span></figcaption></figure><figure><img src="assets/img/denis-work.jpg" loading="lazy" alt="Денис на рабочей встрече"><figcaption><span>02 / СРЕДИ СВОИХ</span><span>Обсуждать идеи ↗</span></figcaption></figure><figure><img src="assets/img/denis-talk.jpg" loading="lazy" alt="Выступление Дениса о ботах и звонках"><figcaption><span>03 / О ПРАКТИКЕ</span><span>Показывать решения ↗</span></figcaption></figure></div><div class="gallery-counter"><span id="galleryNumber">01</span><div><i></i></div><span>03</span></div></section>
+<section class="section access" id="access"><div class="section-kicker"><span>04 — ДОСТУП К CATALYST OS</span><span>ГОТОВАЯ ОСНОВА ДЛЯ ВАШЕЙ РАБОТЫ</span></div><div class="access-layout"><div><h2>Начните<br>с одной <span>задачи.</span></h2><p>Подключите библиотеку к своей нейросети.<br>Возьмите нужный инструмент. Проверьте на своих данных.</p><a class="inline-link" href="https://catalystos.ru/os/connect" target="_blank" rel="noopener">Как подключиться <span>↗</span></a></div><div class="access-card"><div class="plan-switch" role="group" aria-label="Тип доступа"><button class="active" data-plan="personal" aria-pressed="true">Для себя</button><button data-plan="team" aria-pressed="false">Для команды</button></div><div class="price"><strong id="planPrice">9 900</strong> ₽<span>/ месяц</span></div><p id="planDescription">Один доступ для своих проектов и компании.</p><ul><li>Все 1 200+ наработок и обновления</li><li>370+ навыков и 100+ ИИ-сотрудников</li><li>Подключение по MCP</li><li id="planFeature">Решения для своей работы</li></ul><a class="button" href="https://catalystos.ru/lk/payments/ui" target="_blank" rel="noopener">Оформить подписку <span>↗</span></a><small>Нейросеть оплачивается отдельно.</small></div></div></section>
+<section class="contact" id="contact"><div class="contact-top"><span>ЕСТЬ ЗАДАЧА ИЛИ ИДЕЯ?</span><span>ДАВАЙТЕ ПОГОВОРИМ</span></div><a href="https://t.me/deniscatalyst" target="_blank" rel="noopener" class="contact-link">На связи.<span>↗</span></a><div class="contact-bottom"><p>Денис Леушин<br><span>Автор Catalyst OS</span></p><a href="https://t.me/deniscatalyst" target="_blank" rel="noopener">@deniscatalyst ↗</a><a href="https://t.me/catalystosbot" target="_blank" rel="noopener">Поддержка Catalyst OS ↗</a></div></section>
 </main>
-
-<script src="vendor/gsap.min.js"></script>
-<script src="vendor/ScrollTrigger.min.js"></script>
-<script src="vendor/lenis.min.js"></script>
+<footer><a class="logo" href="#top"><span class="logo-symbol">c.</span><span>catalyst<sup>os</sup></span></a><span>© 2026 · ДЕНИС ЛЕУШИН</span><div><a href="https://catalystos.ru/legal/oferta">Оферта</a><a href="https://catalystos.ru/privacy">Конфиденциальность</a><a href="#top">Наверх ↑</a></div></footer>
 <script src="js/main.js"></script>
-<script type="module" src="js/scene.js"></script>
 </body>
 </html>

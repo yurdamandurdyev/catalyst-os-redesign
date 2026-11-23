@@ -1,0 +1,6 @@
+.git
+_qa
+node_modules
+os.json
+vendor
+js/scene.js
