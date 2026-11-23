@@ -36,28 +36,7 @@
     el.classList.add('reveal'); observer.observe(el);
   });
 
-  const tabs = $$('[data-demo]');
-  function activateTab(tab, focus = false) {
-    tabs.forEach(button => {
-      const active = button === tab;
-      button.setAttribute('aria-selected', String(active));
-      button.tabIndex = active ? 0 : -1;
-      $(`#panel-${button.dataset.demo}`).hidden = !active;
-    });
-    if (focus) tab.focus();
-  }
-  tabs.forEach((tab, index) => {
-    tab.addEventListener('click', () => activateTab(tab));
-    tab.addEventListener('keydown', event => {
-      if (['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
-        event.preventDefault();
-        let next = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : (index + (['ArrowRight', 'ArrowDown'].includes(event.key) ? 1 : -1) + tabs.length) % tabs.length;
-        activateTab(tabs[next], true);
-      }
-    });
-  });
-  activateTab(tabs[0]);
-  $('.call-wave').innerHTML = Array.from({ length: 50 }, (_, i) => `<i style="--height:${12 + Math.abs(Math.sin(i * 1.7) * Math.cos(i * .3)) * 85}%;--delay:${-i * .09}s"></i>`).join('');
+  $('.call-wave').innerHTML = Array.from({ length: 50 }, (_, i) => `<i style="--height:${12 + Math.abs(Math.sin(i * 1.7) * Math.cos(i * .3)) * 85}%;--delay:${i * .012}s"></i>`).join('');
 
   const gallery = $('.gallery'), slides = $$('figure', gallery);
   let galleryIndex = 0;
