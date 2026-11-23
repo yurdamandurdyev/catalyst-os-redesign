@@ -1,6 +1,7 @@
 /* Original-homepage content, in the approved cobalt editorial system. */
 .hero-portrait--front{width:min(64vw,900px);height:calc(100% - 155px);bottom:0}
-.hero-portrait--front img{filter:none;object-fit:contain;object-position:center bottom}
+.hero-portrait--front img{filter:grayscale(1) contrast(1.06);object-fit:contain;object-position:center bottom}
+html[data-theme=dark] .hero-portrait--front img{filter:grayscale(1) contrast(1.04) brightness(1.04)}
 @media(max-width:1000px){.hero-portrait--front{width:74vw;left:50%;height:calc(100% - 160px);bottom:0}}
 @media(max-width:700px){.hero-portrait--front{width:135vw;height:calc(100% - 235px);left:50%;bottom:52px}.hero-stage:has(.hero-portrait--front) .hero-note{display:none}}
 .eyebrow-label{font:9px/1.5 var(--mono);letter-spacing:.04em;color:var(--muted)}
