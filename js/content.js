@@ -11,8 +11,8 @@
     const answers = new FormData(chooser);
     const where = answers.get('where'), want = answers.get('want');
     if (!where && !want) {
-      $('#choiceResult').textContent = 'Укажи параметры выше';
-      $('#choiceHint').textContent = '';
+      $('#choiceResult').textContent = 'Выбери ответы на два вопроса выше';
+      $('#choiceHint').textContent = 'Подберём один из 3 форматов под твой уровень и задачи.';
       $('#choiceLink').hidden = true;
       $('.choice-result').classList.remove('has-result');
       return;
