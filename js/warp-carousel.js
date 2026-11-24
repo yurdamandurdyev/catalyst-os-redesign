@@ -772,8 +772,13 @@ void main(){
     const font = '"Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
 
     const getBg = () => {
-      const isLight = document.documentElement.dataset.theme === 'light';
-      return isLight ? [246, 248, 252] : [8, 10, 16];
+      const isDark = document.documentElement.dataset.theme === 'dark';
+      try {
+        const raw = window.getComputedStyle(document.body).backgroundColor;
+        const c = parseColor(raw);
+        if (c && c.length === 3) return c;
+      } catch (_) {}
+      return isDark ? [16, 18, 23] : [245, 245, 242];
     };
 
     const glowCols = cards.map(c => parseColor(c.glow || '#7fd0f0'));
@@ -853,11 +858,12 @@ void main(){
 
     function setCardIndex(targetIndex) {
       const now = performance.now() / 1000;
-      let delta = targetIndex - current;
+      const currentFront = mod(Math.round(live.P), N);
+      let delta = targetIndex - currentFront;
       if (Math.abs(delta) > N / 2) delta -= Math.sign(delta) * N;
       current = mod(targetIndex, N);
       live.from = live.P;
-      live.to = Math.round(live.P - DRIFT) + delta + DRIFT;
+      live.to = Math.round(live.P) + delta;
       live.t0 = now;
       live.n = 35; // brisk 1.1s turn
       live.mode = 'spin';
@@ -1001,18 +1007,16 @@ void main(){
         live.mode = 'rest';
         const r = wrap.getBoundingClientRect();
         const u = (e.clientX - r.left - r.width / 2) / Math.min(r.width / 720, r.height / 440);
-        if (u > 140) setCardIndex(current + 1);
-        else if (u < -140) setCardIndex(current - 1);
+        if (u > 120) setCardIndex(current + 1);
+        else if (u < -120) setCardIndex(current - 1);
         return;
       }
       if (now - live.lastT > 0.08) live.v = 0;
       const target = Math.round(live.P + live.v * 0.16);
-      const from = Math.round(live.dragP - DRIFT);
       live.to = target;
       live.mode = 'spring';
       live.lastT = now;
-      const next = current + (target - from);
-      current = mod(next, N);
+      current = mod(target, N);
       updateDock(current);
       kick();
     });
@@ -1020,6 +1024,12 @@ void main(){
     wrap.addEventListener('pointercancel', () => {
       live.mode = 'rest';
     });
+
+    // Theme observer to re-render background immediately
+    const themeObs = new MutationObserver(() => {
+      draw(performance.now() / 1000);
+    });
+    themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
     // Navigation buttons & tabs
     document.querySelectorAll('.warp-tab').forEach(tab => {

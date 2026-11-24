@@ -58,18 +58,10 @@
     <p>Начни с того, что нужно сейчас.<br>Листай 3D-орбиту или выбери формат ниже.</p>
   </div>
 
-  <!-- Warp 3D Carousel Container -->
-  <div class="warp-carousel-wrap">
-    <!-- Quick filter tabs -->
-    <div class="warp-tabs" role="tablist" aria-label="Форматы Catalyst OS">
-      <button class="warp-tab active" data-index="0" role="tab" aria-selected="true">01 · Демо (0 ₽)</button>
-      <button class="warp-tab" data-index="1" role="tab" aria-selected="false">02 · Файл целиком (990 ₽)</button>
-      <button class="warp-tab" data-index="2" role="tab" aria-selected="false">03 · Catalyst OS (9 900 ₽)</button>
-      <button class="warp-tab" data-index="3" role="tab" aria-selected="false">04 · Курс с Денисом (29.9k)</button>
-    </div>
-
+  <!-- Unified 3D Warp Stage & Content (No borders / Seamless) -->
+  <div class="warp-unified-block">
     <!-- 3D Stage -->
-    <div class="warp-stage" id="warpContainer" role="region" aria-roledescription="carousel" aria-label="3D карусель путей">
+    <div class="warp-stage-seamless" id="warpContainer" role="region" aria-roledescription="carousel" aria-label="3D орбита путей">
       <canvas id="warpCanvas" aria-hidden="true"></canvas>
       <div class="warp-controls">
         <button class="warp-nav-btn prev" id="warpPrevBtn" aria-label="Предыдущая карточка">
@@ -81,22 +73,29 @@
       </div>
     </div>
 
-    <!-- Active Card Dock -->
-    <div class="warp-active-dock" id="warpActiveDock">
-      <div class="warp-dock-info">
-        <div class="warp-dock-top">
-          <span class="warp-dock-badge" id="warpActiveBadge">01 / Хочу попробовать</span>
-          <span class="warp-dock-price" id="warpActivePrice">0 ₽ · демо бесплатно</span>
-        </div>
-        <h3 class="warp-dock-title" id="warpActiveTitle">Единый файл правды</h3>
-        <p class="warp-dock-desc" id="warpActiveDesc">Один файл о компании, нейросеть отвечает по твоим правилам.</p>
-        <small class="warp-dock-note" id="warpActiveNote">Откроется Telegram, бот проверит подписку на канал и пришлёт файл.</small>
+    <!-- Unified Text & Action (Directly below front card, all in one place) -->
+    <div class="warp-unified-content">
+      <div class="warp-unified-top">
+        <span class="warp-unified-badge" id="warpActiveBadge">01 / Хочу попробовать</span>
+        <span class="warp-unified-price" id="warpActivePrice">0 ₽ · демо бесплатно</span>
       </div>
-      <div class="warp-dock-action">
-        <a class="warp-dock-btn" id="warpActiveBtn" href="https://t.me/denis_pleada_bot?start=efp_site" target="_blank" rel="noopener">
+      <h3 class="warp-unified-title" id="warpActiveTitle">Единый файл правды</h3>
+      <p class="warp-unified-desc" id="warpActiveDesc">Один файл о компании, нейросеть отвечает по твоим правилам.</p>
+      
+      <div class="warp-unified-action">
+        <a class="warp-unified-btn" id="warpActiveBtn" href="https://t.me/denis_pleada_bot?start=efp_site" target="_blank" rel="noopener">
           <span>Забрать демо · 0 ₽</span>
           <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M4 12L12 4M5 4h7v7"/></svg>
         </a>
+      </div>
+      <small class="warp-unified-note" id="warpActiveNote">Откроется Telegram, бот проверит подписку на канал и пришлёт файл.</small>
+
+      <!-- Segmented path navigation pills in the same unified place -->
+      <div class="warp-unified-pills" role="tablist" aria-label="Форматы Catalyst OS">
+        <button class="warp-tab active" data-index="0" role="tab" aria-selected="true">01 · Демо (0 ₽)</button>
+        <button class="warp-tab" data-index="1" role="tab" aria-selected="false">02 · Файл целиком (990 ₽)</button>
+        <button class="warp-tab" data-index="2" role="tab" aria-selected="false">03 · Catalyst OS (9 900 ₽)</button>
+        <button class="warp-tab" data-index="3" role="tab" aria-selected="false">04 · Курс с Денисом (29.9k)</button>
       </div>
     </div>
   </div>
