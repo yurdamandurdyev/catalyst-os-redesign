@@ -4,8 +4,7 @@
   "private": true,
   "description": "Catalyst OS — Redesign with Warp 3D Carousel & 21st.dev Gradient Menu",
   "scripts": {
-    "dev": "npx serve .",
-    "build": "echo 'Static build ready'"
+    "dev": "npx serve ."
   },
   "dependencies": {
     "react": "^18.3.1",
