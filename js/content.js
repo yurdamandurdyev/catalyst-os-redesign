@@ -3,46 +3,128 @@
   const $$ = selector => [...document.querySelectorAll(selector)];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Same routing rule as catalystos.ru/site/home/mount.js.
-  const routeNames = { efp: 'Единый файл правды', os: 'Catalyst OS', kurs: 'Курс «От чата к агенту»' };
-  const chooser = $('.chooser-form');
-  chooser.addEventListener('submit', event => event.preventDefault());
-  chooser.addEventListener('change', () => {
-    const answers = new FormData(chooser);
-    const where = answers.get('where'), want = answers.get('want');
-    if (!where && !want) {
-      $('#choiceResult').textContent = 'Выбери ответы на два вопроса выше';
-      $('#choiceHint').textContent = 'Подберём один из 3 форматов под твой уровень и задачи.';
-      $('#choiceLink').hidden = true;
-      $('.choice-result').classList.remove('has-result');
-      return;
+  // Routing metadata & styling for interactive chooser
+  const routeMeta = {
+    efp: {
+      name: 'Единый файл правды',
+      badge: '01 / Демо бесплатно · 0 ₽',
+      color: '#00c6ff',
+      glow: 'rgba(0, 198, 255, 0.4)',
+      btnText: 'Забрать демо (0 ₽)'
+    },
+    os: {
+      name: 'Catalyst OS',
+      badge: '03 / Catalyst OS · 9 900 ₽',
+      color: '#2F80ED',
+      glow: 'rgba(47, 128, 237, 0.4)',
+      btnText: 'Открыть Catalyst OS'
+    },
+    kurs: {
+      name: 'Курс «От чата к агенту»',
+      badge: '04 / Курс с Денисом · 29 900 ₽',
+      color: '#10b981',
+      glow: 'rgba(16, 185, 129, 0.4)',
+      btnText: 'Программа курса'
     }
-    if (!where || !want) {
-      $('#choiceResult').textContent = 'Остался ещё один вопрос выше';
-      $('#choiceHint').textContent = where ? 'Выбери желаемый формат во 2-м блоке' : 'Укажи текущую среду в 1-м блоке';
-      $('#choiceLink').hidden = true;
-      $('.choice-result').classList.remove('has-result');
-      return;
+  };
+
+  const chooser = $('#chooserForm') || $('.chooser-form');
+  const progressStat = $('#choiceProgressStat');
+  const progressBar = $('#choiceProgressBar');
+  const progressHint = $('#choiceProgressHint');
+  const resultContainer = $('#choiceResultContainer') || $('.choice-result');
+  const resultBadge = $('#choiceRouteBadge');
+  const resultLinkText = $('#choiceLinkText');
+
+  if (chooser) {
+    chooser.addEventListener('submit', event => event.preventDefault());
+    chooser.addEventListener('change', () => {
+      const answers = new FormData(chooser);
+      const where = answers.get('where'), want = answers.get('want');
+      
+      const count = (where ? 1 : 0) + (want ? 1 : 0);
+      const percent = count === 2 ? 100 : count === 1 ? 50 : 0;
+      
+      if (progressBar) progressBar.style.width = `${percent}%`;
+      if (progressStat) progressStat.textContent = `${count} / 2`;
+
+      if (count === 0) {
+        if (progressHint) progressHint.textContent = 'Выберите, где вы работаете с нейросетью';
+        $('#choiceResult').textContent = 'Выбери ответы на два вопроса выше';
+        $('#choiceHint').textContent = 'Подберём один из 3 форматов под твой уровень и задачи.';
+        $('#choiceLink').hidden = true;
+        if (resultBadge) resultBadge.hidden = true;
+        if (resultContainer) resultContainer.classList.remove('has-result');
+        return;
+      }
+
+      if (count === 1) {
+        if (progressHint) progressHint.textContent = where ? 'Шаг 2: выберите желаемый темп' : 'Шаг 1: укажите текущую среду';
+        $('#choiceResult').textContent = 'Остался ещё один вопрос выше';
+        $('#choiceHint').textContent = where ? 'Выбери желаемый формат во 2-м блоке' : 'Укажи текущую среду в 1-м блоке';
+        $('#choiceLink').hidden = true;
+        if (resultBadge) resultBadge.hidden = true;
+        if (resultContainer) resultContainer.classList.remove('has-result');
+        return;
+      }
+
+      // Both answered (count === 2)
+      if (progressHint) progressHint.textContent = 'Готово! Оптимальный маршрут найден';
+      const route = want === 'learn' ? 'kurs' : want === 'ready' && where === 'agent' ? 'os' : 'efp';
+      const meta = routeMeta[route] || routeMeta.efp;
+
+      $('#choiceResult').textContent = `Твой путь: ${meta.name}`;
+      $('#choiceHint').textContent = where === 'chat' && want === 'ready' 
+        ? 'Сначала забрать файл правды, затем подключить готовую базу Catalyst OS.' 
+        : 'Оптимальный старт под твой текущий уровень и задачи компании.';
+      
+      if (resultBadge) {
+        resultBadge.textContent = meta.badge;
+        resultBadge.hidden = false;
+        resultBadge.style.color = meta.color;
+        resultBadge.style.borderColor = meta.color;
+      }
+
+      if (resultContainer) {
+        resultContainer.style.setProperty('--route-color', meta.color);
+        resultContainer.style.setProperty('--route-glow', meta.glow);
+        resultContainer.classList.add('has-result');
+      }
+
+      const choiceLink = $('#choiceLink');
+      if (choiceLink) {
+        choiceLink.hidden = false;
+        choiceLink.href = '#start';
+        choiceLink.dataset.route = route;
+        if (resultLinkText) resultLinkText.textContent = meta.btnText;
+      }
+    });
+
+    const choiceLink = $('#choiceLink');
+    if (choiceLink) {
+      choiceLink.addEventListener('click', event => {
+        event.preventDefault();
+        const route = event.currentTarget.dataset.route || 'efp';
+        const routeMap = { efp: 0, os: 2, kurs: 3 };
+        const targetIdx = routeMap[route] !== undefined ? routeMap[route] : 0;
+        
+        if (window.warpCarousel) {
+          window.warpCarousel.setIndex(targetIdx);
+        }
+        
+        const target = document.getElementById('start');
+        if (target) {
+          target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+        }
+
+        setTimeout(() => {
+          if (window.warpCarousel && window.warpCarousel.openModal) {
+            window.warpCarousel.openModal(targetIdx);
+          }
+        }, 650);
+      });
     }
-    const route = want === 'learn' ? 'kurs' : want === 'ready' && where === 'agent' ? 'os' : 'efp';
-    $('#choiceResult').textContent = `Твой путь: ${routeNames[route]}`;
-    $('#choiceHint').textContent = where === 'chat' && want === 'ready' ? 'Сначала забрать файл правды, затем подключить Catalyst OS.' : 'Оптимальный старт под твою задачу.';
-    $('#choiceLink').hidden = false;
-    $('#choiceLink').href = '#start';
-    $('#choiceLink').dataset.route = route;
-    $('.choice-result').classList.add('has-result');
-  });
-  $('#choiceLink').addEventListener('click', event => {
-    event.preventDefault();
-    const route = event.currentTarget.dataset.route || 'efp';
-    const routeMap = { efp: 0, os: 2, kurs: 3 };
-    if (window.warpCarousel && routeMap[route] !== undefined) {
-      window.warpCarousel.setIndex(routeMap[route]);
-    }
-    const target = document.getElementById('start');
-    if (!target) return;
-    target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
-  });
+  }
 
   const niches = {
     any: 'Деньги, звонки, заявки и команда.',
