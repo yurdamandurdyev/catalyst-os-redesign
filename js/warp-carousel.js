@@ -687,6 +687,12 @@ void main(){
       heading: 'Единый файл правды',
       tag: '0 ₽ · демо бесплатно',
       desc: 'Один файл о компании, нейросеть отвечает по твоим правилам.',
+      features: [
+        'Короткий файл о компании в формате .MD за один вечер',
+        'Нейросеть отвечает строго по вашим правилам без галлюцинаций',
+        'Готовая структура под любую LLM (ChatGPT, Claude, DeepSeek)',
+        'Мгновенное получение через Telegram-бота'
+      ],
       btnText: 'Забрать демо · 0 ₽',
       btnHref: 'https://t.me/denis_pleada_bot?start=efp_site',
       btnTarget: '_blank',
@@ -711,6 +717,12 @@ void main(){
       heading: 'Полная версия ЕФП',
       tag: '990 ₽ · один раз',
       desc: 'CEO-агент, отделы, системный журнал и готовый контекст компании навсегда.',
+      features: [
+        'Полная архитектура Единого файла правды под ключ',
+        'CEO-агент, специализированные отделы и системный журнал',
+        'Файлы остаются в компании навсегда, без ежемесячных оплат',
+        'Методичка и видео-разбор по внедрению в рабочий процесс'
+      ],
       btnText: 'Подробнее о файле',
       btnHref: 'https://catalystos.ru/efp',
       btnTarget: '_blank',
@@ -734,6 +746,12 @@ void main(){
       heading: 'Catalyst OS',
       tag: '9 900 ₽ / месяц',
       desc: 'Готовые экраны и скиллы по MCP, решение на твоих корпоративных данных.',
+      features: [
+        '1 200+ готовых корпоративных наработок и экранов',
+        '370+ навыков и 100+ ИИ-сотрудников под реальные задачи',
+        'Подключение по MCP к Cursor, Claude Code, Codex за 2 минуты',
+        'Решения строятся прямо на ваших реальных данных компании'
+      ],
       btnText: 'Как это работает',
       btnHref: 'https://catalystos.ru/os',
       btnTarget: '_self',
@@ -757,6 +775,12 @@ void main(){
       heading: 'Курс «От чата к агенту»',
       tag: '29 900 ₽ за курс',
       desc: 'Доведёшь одну конкретную работу компании до проверенного измеримого результата.',
+      features: [
+        'Личное обучение и сопровождение от Дениса Леушина',
+        'Доведёшь одну конкретную задачу компании до измеримого результата',
+        'В подарок: полная версия ЕФП навсегда + 1 месяц Catalyst OS',
+        '12 месяцев доступа к закрытому комьюнити и разборам проектов'
+      ],
       btnText: 'Программа курса',
       btnHref: 'https://catalystos.ru/kurs',
       btnTarget: '_self',
@@ -851,39 +875,77 @@ void main(){
       visible: true
     };
 
+    // Modal DOM elements
+    const modalEl = document.getElementById('warpCardModal');
+    const modalCloseBtn = document.getElementById('warpModalClose');
+    const modalBadge = document.getElementById('warpModalBadge');
+    const modalTitle = document.getElementById('warpModalTitle');
+    const modalPrice = document.getElementById('warpModalPrice');
+    const modalDesc = document.getElementById('warpModalDesc');
+    const modalFeatures = document.getElementById('warpModalFeatures');
+    const modalBtn = document.getElementById('warpModalBtn');
+    const modalBtnText = document.getElementById('warpModalBtnText');
+    const modalNote = document.getElementById('warpModalNote');
+    const stageHintBtn = document.getElementById('warpStageHint');
+
+    function openCardModal(idx) {
+      const card = cards[mod(idx, N)];
+      if (!modalEl || !card) return;
+
+      if (modalBadge) modalBadge.textContent = card.badge;
+      if (modalTitle) modalTitle.textContent = card.heading;
+      if (modalPrice) modalPrice.textContent = card.tag;
+      if (modalDesc) modalDesc.textContent = card.desc;
+      if (modalNote) modalNote.textContent = card.note;
+
+      if (modalBtn) {
+        modalBtn.href = card.btnHref;
+        modalBtn.target = card.btnTarget;
+        modalBtn.style.setProperty('--btn-grad-from', card.gradientTo || '#0072ff');
+        modalBtn.style.setProperty('--btn-grad-to', card.gradientFrom || '#00c6ff');
+      }
+      if (modalBtnText) modalBtnText.textContent = card.btnText;
+
+      if (modalFeatures) {
+        modalFeatures.innerHTML = (card.features || []).map(f => `
+          <li>
+            <span class="warp-feature-icon" style="color: ${card.accent || '#10b981'}" aria-hidden="true">
+              <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 8.5l3.5 3.5 6.5-7"/>
+              </svg>
+            </span>
+            <span>${f}</span>
+          </li>
+        `).join('');
+      }
+
+      modalEl.style.setProperty('--modal-accent', card.accent || '#10b981');
+      modalEl.style.setProperty('--modal-glow', card.glow || '#1b4dff');
+      modalEl.classList.add('active');
+      modalEl.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('warp-modal-open');
+
+      // Pause auto-rotation while modal is open
+      live.nextAuto = performance.now() / 1000 + 3600;
+    }
+
+    function closeCardModal() {
+      if (!modalEl) return;
+      modalEl.classList.remove('active');
+      modalEl.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('warp-modal-open');
+      live.nextAuto = performance.now() / 1000 + 4;
+      kick();
+    }
+
     function updateDock(idx) {
       const activeCard = cards[mod(idx, N)];
-      const badgeEl = document.getElementById('warpActiveBadge');
-      const titleEl = document.getElementById('warpActiveTitle');
-      const priceEl = document.getElementById('warpActivePrice');
-      const descEl = document.getElementById('warpActiveDesc');
-      const btnEl = document.getElementById('warpActiveBtn');
-      const noteEl = document.getElementById('warpActiveNote');
-
-      if (badgeEl) badgeEl.textContent = activeCard.badge;
-      if (titleEl) titleEl.textContent = activeCard.heading;
-      if (priceEl) priceEl.textContent = activeCard.tag;
-      if (descEl) descEl.textContent = activeCard.desc;
-      if (btnEl) {
-        btnEl.href = activeCard.btnHref;
-        btnEl.target = activeCard.btnTarget;
-        btnEl.style.setProperty('--btn-grad-from', activeCard.gradientTo || '#0072ff');
-        btnEl.style.setProperty('--btn-grad-to', activeCard.gradientFrom || '#00c6ff');
-        const textSpan = btnEl.querySelector('.warp-btn-text');
+      if (stageHintBtn) {
+        const textSpan = stageHintBtn.querySelector('.warp-hint-text');
         if (textSpan) {
-          textSpan.textContent = activeCard.btnText;
-        } else {
-          btnEl.innerHTML = `<span class="warp-btn-glow" aria-hidden="true"></span><span class="warp-btn-bg" aria-hidden="true"></span><span class="warp-btn-content"><span class="warp-btn-text">${activeCard.btnText}</span> <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M4 12L12 4M5 4h7v7"/></svg></span>`;
+          textSpan.textContent = `Подробнее о «${activeCard.heading}»`;
         }
       }
-      if (noteEl) noteEl.textContent = activeCard.note;
-
-      // Update tabs
-      document.querySelectorAll('.warp-tab').forEach((tab, i) => {
-        const isMatch = i === mod(idx, N);
-        tab.classList.toggle('active', isMatch);
-        tab.setAttribute('aria-selected', isMatch ? 'true' : 'false');
-      });
     }
 
     function setCardIndex(targetIndex) {
@@ -1016,17 +1078,29 @@ void main(){
     });
 
     wrap.addEventListener('pointermove', e => {
-      if (live.mode !== 'drag') return;
-      const r = wrap.getBoundingClientRect();
-      const unitCss = getUnitCss(r);
-      const now = performance.now() / 1000;
-      const P = live.dragP - (e.clientX - live.dragX) / (unitCss * 280);
-      const dt = Math.max(1 / 240, now - live.lastT);
-      live.v = 0.6 * live.v + 0.4 * ((P - live.P) / dt);
-      live.P = P;
-      live.lastT = now;
-      if (Math.abs(e.clientX - live.downX) > 6) live.moved = true;
-      draw(now);
+      if (live.mode === 'drag') {
+        const r = wrap.getBoundingClientRect();
+        const unitCss = getUnitCss(r);
+        const now = performance.now() / 1000;
+        const P = live.dragP - (e.clientX - live.dragX) / (unitCss * 280);
+        const dt = Math.max(1 / 240, now - live.lastT);
+        live.v = 0.6 * live.v + 0.4 * ((P - live.P) / dt);
+        live.P = P;
+        live.lastT = now;
+        if (Math.abs(e.clientX - live.downX) > 6) live.moved = true;
+        draw(now);
+      } else {
+        const r = wrap.getBoundingClientRect();
+        const unitCss = getUnitCss(r);
+        const u = (e.clientX - r.left - r.width / 2) / (unitCss * 180);
+        if (Math.abs(u) <= 0.8) {
+          wrap.style.cursor = 'pointer';
+          wrap.title = 'Нажмите, чтобы открыть подробности';
+        } else {
+          wrap.style.cursor = 'grab';
+          wrap.removeAttribute('title');
+        }
+      }
     });
 
     wrap.addEventListener('pointerup', e => {
@@ -1038,8 +1112,14 @@ void main(){
         const r = wrap.getBoundingClientRect();
         const unitCss = getUnitCss(r);
         const u = (e.clientX - r.left - r.width / 2) / (unitCss * 180);
-        if (u > 0.8) setCardIndex(current + 1);
-        else if (u < -0.8) setCardIndex(current - 1);
+        if (Math.abs(u) <= 0.8) {
+          // Click on front card -> open full detail modal
+          openCardModal(current);
+        } else if (u > 0.8) {
+          setCardIndex(current + 1);
+        } else if (u < -0.8) {
+          setCardIndex(current - 1);
+        }
         return;
       }
       if (now - live.lastT > 0.08) live.v = 0;
@@ -1062,14 +1142,23 @@ void main(){
     });
     themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
-    // Navigation buttons & tabs
-    document.querySelectorAll('.warp-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        const idx = parseInt(tab.dataset.index, 10);
-        if (!isNaN(idx)) setCardIndex(idx);
+    // Modal & hint controls
+    if (stageHintBtn) stageHintBtn.addEventListener('click', () => openCardModal(current));
+    if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeCardModal);
+    if (modalEl) {
+      modalEl.addEventListener('click', e => {
+        if (e.target === modalEl || e.target.classList.contains('warp-modal-container')) {
+          closeCardModal();
+        }
       });
+    }
+    window.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && modalEl && modalEl.classList.contains('active')) {
+        closeCardModal();
+      }
     });
 
+    // Navigation buttons (prev/next)
     const prevBtn = document.getElementById('warpPrevBtn');
     const nextBtn = document.getElementById('warpNextBtn');
     if (prevBtn) prevBtn.addEventListener('click', () => setCardIndex(current - 1));
@@ -1092,11 +1181,13 @@ void main(){
     updateDock(0);
     kick();
 
-    // Global hook for chooser
+    // Global hook for chooser & external links
     window.warpCarousel = {
       setIndex: setCardIndex,
       next: () => setCardIndex(current + 1),
       prev: () => setCardIndex(current - 1),
+      openModal: openCardModal,
+      closeModal: closeCardModal,
       getIndex: () => current
     };
   }
