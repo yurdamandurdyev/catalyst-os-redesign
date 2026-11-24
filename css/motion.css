@@ -1,0 +1,455 @@
+/**
+ * Catalyst OS — Motion & Design Upgrade
+ * Skills: mega-frontend-design · ui-motion · visual-design-language · unslop
+ *
+ * Layers:
+ *   1. Design tokens upgrade (noise, gradients, improved vars)
+ *   2. Header glassmorphism + scroll-activated state
+ *   3. Hero upgrades (gradient text, improved layout)
+ *   4. Micro-interaction states (buttons, links, cards)
+ *   5. Section-level improvements
+ *   6. Shimmer on buttons
+ *   7. Smooth FAQ transitions
+ *   8. Gallery polish
+ *   9. Cursor follower (desktop only)
+ *  10. Motion overrides (smooth instead of instant)
+ */
+
+/* ─── 1. Token upgrades ─────────────────────────────────────────────── */
+:root {
+  --blue-deep: #123adb;
+  --blue-glow: #204dff33;
+  --radius-card: 16px;
+  --radius-btn: 6px;
+  --shadow-card: 0 2px 12px rgba(0,0,0,.06), 0 8px 40px rgba(0,0,0,.08);
+  --shadow-card-hover: 0 4px 24px rgba(0,0,0,.10), 0 16px 60px rgba(0,0,0,.12);
+  --transition-ui: .3s cubic-bezier(.22,1,.36,1);
+  --shimmer-x: -120%;
+}
+
+/* Noise texture overlay — subtle grain for depth */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: .025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: overlay;
+}
+
+/* ─── 2. Header glassmorphism ───────────────────────────────────────── */
+.header {
+  transition: background var(--transition-ui),
+              backdrop-filter var(--transition-ui),
+              box-shadow var(--transition-ui),
+              border-color var(--transition-ui);
+  border-bottom: 1px solid transparent;
+}
+
+.header.scrolled {
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  box-shadow: 0 1px 0 var(--line);
+  border-bottom-color: var(--line);
+  position: fixed !important;
+}
+
+/* ─── 3. Hero upgrades ──────────────────────────────────────────────── */
+/* Portrait — remove grayscale on scroll, add reveal effect */
+.hero-portrait img {
+  filter: grayscale(0.4);
+  transition: filter 1.2s ease;
+}
+
+.hero:hover .hero-portrait img {
+  filter: grayscale(0);
+}
+
+/* Scroll arrow */
+.scroll-arrow {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* ─── 4. Button micro-interactions ─────────────────────────────────── */
+.button {
+  border-radius: var(--radius-btn);
+  position: relative;
+  overflow: hidden;
+  transition: background var(--transition-ui),
+              box-shadow var(--transition-ui),
+              transform var(--transition-ui);
+  /* Shimmer pseudo-element */
+}
+
+.button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255,255,255,.18) 50%,
+    transparent 60%
+  );
+  transform: translateX(var(--shimmer-x, -120%));
+  pointer-events: none;
+  transition: none;
+}
+
+.button:hover {
+  box-shadow: 0 4px 20px var(--blue-glow);
+  transform: translateY(-1px);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.button.white:hover {
+  box-shadow: 0 4px 20px rgba(32,77,255,.2);
+}
+
+/* ─── 5. round-link arrow ──────────────────────────────────────────── */
+.round-link i {
+  transition: background var(--transition-ui),
+              transform var(--transition-ui);
+  will-change: transform;
+}
+
+.round-link:hover i {
+  background: var(--blue-deep) !important;
+  box-shadow: 0 4px 16px var(--blue-glow);
+}
+
+/* ─── 6. inline-link ────────────────────────────────────────────────── */
+.inline-link {
+  position: relative;
+  overflow: hidden;
+  transition: color var(--transition-ui), border-color var(--transition-ui);
+}
+
+.inline-link span {
+  display: inline-block;
+  will-change: transform;
+  transition: transform var(--transition-ui);
+}
+
+/* ─── 7. Path cards ─────────────────────────────────────────────────── */
+.path-card {
+  border-radius: var(--radius-card);
+  transition: box-shadow var(--transition-ui),
+              transform var(--transition-ui);
+  will-change: transform;
+}
+
+.path-card:hover {
+  box-shadow: var(--shadow-card-hover) !important;
+}
+
+.path-card.featured {
+  box-shadow: var(--shadow-card);
+}
+
+/* ─── 8. Roadmap branches ───────────────────────────────────────────── */
+.roadmap-branches > a {
+  transition: transform var(--transition-ui),
+              background var(--transition-ui),
+              border-color var(--transition-ui);
+  will-change: transform;
+}
+
+.roadmap-start {
+  transition: box-shadow var(--transition-ui);
+}
+
+.roadmap-start:hover {
+  box-shadow: 0 4px 24px rgba(32,77,255,.12);
+}
+
+/* ─── 9. Gallery ───────────────────────────────────────────────────── */
+.gallery > figure {
+  transition: transform var(--transition-ui);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.gallery > figure:hover {
+  transform: scale(1.015);
+}
+
+.gallery-controls button {
+  transition: background var(--transition-ui),
+              color var(--transition-ui),
+              border-color var(--transition-ui),
+              transform var(--transition-ui);
+}
+
+.gallery-controls button:active {
+  transform: scale(0.9);
+}
+
+/* ─── 10. Demo cards ────────────────────────────────────────────────── */
+.demo {
+  border-radius: 12px !important;
+  transition: box-shadow var(--transition-ui);
+}
+
+.demo:hover {
+  box-shadow: 0 40px 90px rgba(7,21,44,.3), 0 0 0 1px rgba(130,157,202,.2) !important;
+}
+
+/* ─── 11. Access card ───────────────────────────────────────────────── */
+.access-card {
+  border-radius: 12px;
+  transition: box-shadow var(--transition-ui);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gradient border glow on access card */
+.access-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--blue), transparent 60%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity var(--transition-ui);
+  pointer-events: none;
+}
+
+.access-card:hover::before {
+  opacity: 1;
+}
+
+/* ─── 12. Plan/billing switch buttons ───────────────────────────────── */
+.plan-switch button,
+.billing-switch button {
+  transition: background var(--transition-ui),
+              color var(--transition-ui),
+              box-shadow var(--transition-ui);
+}
+
+.billing-switch {
+  display: flex;
+  gap: 4px;
+  margin-top: 16px;
+  padding: 4px;
+  background: var(--soft);
+  border-radius: 5px;
+}
+
+.billing-switch button {
+  flex: 1;
+  font-size: 11px;
+  padding: 8px;
+  background: transparent;
+  color: var(--muted);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.billing-switch button[aria-pressed="true"] {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 2px 5px rgba(0,0,0,.06);
+}
+
+/* ─── 13. Niche picker ──────────────────────────────────────────────── */
+.niche-options button {
+  transition: background var(--transition-ui),
+              color var(--transition-ui),
+              transform var(--transition-ui);
+  border-radius: 100px;
+}
+
+.niche-options button[aria-pressed="true"] {
+  background: var(--blue);
+  color: white;
+}
+
+/* ─── 14. Contact section final links ───────────────────────────────── */
+.final-paths nav a {
+  transition: color var(--transition-ui),
+              border-color var(--transition-ui),
+              transform var(--transition-ui);
+  will-change: transform;
+}
+
+.final-paths nav a i {
+  display: inline-block;
+  will-change: transform;
+  transition: transform var(--transition-ui);
+}
+
+/* ─── 15. FAQ smooth open ───────────────────────────────────────────── */
+details > div {
+  overflow: hidden;
+  will-change: height, opacity;
+}
+
+details summary {
+  cursor: pointer;
+  transition: color var(--transition-ui);
+  user-select: none;
+}
+
+details[open] summary {
+  color: var(--blue);
+}
+
+/* ─── 16. blue-band rotating icon ───────────────────────────────────── */
+.blue-band svg {
+  will-change: transform;
+  transform-origin: center;
+}
+
+/* ─── 17. section-kicker lines ─────────────────────────────────────── */
+.section-kicker {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ─── 18. Product section — improved stat borders ───────────────────── */
+.product-stats > div {
+  transition: border-color var(--transition-ui);
+}
+
+.product-stats > div:hover {
+  border-left-color: rgba(255,255,255,.4);
+}
+
+/* ─── 19. Status dot pulse ──────────────────────────────────────────── */
+.status-dot::before {
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: .5; transform: scale(1.4); }
+}
+
+/* ─── 20. Navigation link hover — improved underline ────────────────── */
+.header nav a {
+  transition: color var(--transition-ui);
+}
+
+.header nav a::after {
+  transition: transform .4s cubic-bezier(.22,1,.36,1),
+              opacity .4s;
+  transform-origin: left;
+  opacity: 0;
+}
+
+.header nav a:hover::after {
+  opacity: 1;
+}
+
+/* ─── 21. Logo hover ────────────────────────────────────────────────── */
+.logo-symbol {
+  transition: transform var(--transition-ui),
+              box-shadow var(--transition-ui);
+}
+
+.logo:hover .logo-symbol {
+  transform: rotate(-6deg) scale(1.08);
+  box-shadow: 0 4px 16px var(--blue-glow);
+}
+
+/* ─── 22. Dark mode — richer surface ───────────────────────────────── */
+html[data-theme=dark] .path-card {
+  border: 1px solid rgba(255,255,255,.06);
+  background: var(--surface);
+}
+
+html[data-theme=dark] .access-card {
+  border-color: rgba(255,255,255,.08);
+}
+
+html[data-theme=dark] body::before {
+  opacity: .04;
+  mix-blend-mode: screen;
+}
+
+/* ─── 23. Chooser form — radio pill style ───────────────────────────── */
+.choice-options label {
+  transition: background var(--transition-ui),
+              color var(--transition-ui),
+              border-color var(--transition-ui),
+              box-shadow var(--transition-ui);
+}
+
+.choice-options label:has(input:checked) {
+  box-shadow: 0 2px 12px var(--blue-glow);
+}
+
+/* ─── 24. theme-switch hover ────────────────────────────────────────── */
+.theme-switch {
+  transition: background var(--transition-ui),
+              transform var(--transition-ui),
+              border-color var(--transition-ui) !important;
+}
+
+.theme-switch:hover {
+  transform: rotate(20deg) scale(1.08) !important;
+}
+
+/* ─── 25. Scroll progress indicator (top of page) ───────────────────── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--blue);
+  transform-origin: left;
+  transform: scaleX(0);
+  z-index: 1000;
+  pointer-events: none;
+  transition: none;
+}
+
+/* ─── 26. Mobile nav improved ───────────────────────────────────────── */
+.mobile-nav {
+  transition: transform var(--transition-ui),
+              opacity var(--transition-ui);
+}
+
+/* ─── 27. Hero bottom bar — improved ───────────────────────────────── */
+.hero-bottom {
+  transition: opacity var(--transition-ui);
+}
+
+/* ─── 28. Remove old reveal transitions (now GSAP handles them) ──────── */
+.reveal {
+  transition: none !important;
+}
+
+/* ─── 29. Focus visible — improved ring ────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--blue) !important;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ─── 30. Smooth color-scheme transition ────────────────────────────── */
+html {
+  transition: background-color .4s, color .4s;
+}
+
+/* ─── 31. Performance: will-change hints ───────────────────────────── */
+.hero-name,
+.hero-portrait,
+.hero-note,
+.hero-action {
+  will-change: transform, opacity;
+}
