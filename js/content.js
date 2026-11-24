@@ -10,10 +10,23 @@
   chooser.addEventListener('change', () => {
     const answers = new FormData(chooser);
     const where = answers.get('where'), want = answers.get('want');
-    if (!where || !want) return;
+    if (!where && !want) {
+      $('#choiceResult').textContent = 'Выбери ответ на каждый вопрос выше';
+      $('#choiceHint').textContent = '';
+      $('#choiceLink').hidden = true;
+      $('.choice-result').classList.remove('has-result');
+      return;
+    }
+    if (!where || !want) {
+      $('#choiceResult').innerHTML = 'Остался <span>1 вопрос</span> выше';
+      $('#choiceHint').textContent = where ? 'Теперь укажи, какой результат нужен во 2-м вопросе.' : 'Укажи, где сейчас работаешь с ИИ в 1-м вопросе.';
+      $('#choiceLink').hidden = true;
+      $('.choice-result').classList.remove('has-result');
+      return;
+    }
     const route = want === 'learn' ? 'kurs' : want === 'ready' && where === 'agent' ? 'os' : 'efp';
-    $('#choiceResult').textContent = `Твой путь: ${routeNames[route]}`;
-    $('#choiceHint').textContent = where === 'chat' && want === 'ready' ? 'Сначала файл, потом Catalyst OS.' : '';
+    $('#choiceResult').innerHTML = `Твой путь: <span>${routeNames[route]}</span>`;
+    $('#choiceHint').textContent = where === 'chat' && want === 'ready' ? 'Сначала файл, потом Catalyst OS.' : 'Оптимальная точка старта под твои параметры.';
     $('#choiceLink').hidden = false;
     $('#choiceLink').href = `#path-${route}`;
     $('.choice-result').classList.add('has-result');
@@ -27,8 +40,11 @@
   $('#choiceLink').addEventListener('click', event => {
     event.preventDefault();
     const target = document.querySelector(event.currentTarget.getAttribute('href'));
+    if (!target) return;
     target.focus({ preventScroll: true });
     target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+    target.classList.add('pulse-focus');
+    setTimeout(() => target.classList.remove('pulse-focus'), 1800);
   });
 
   const niches = {

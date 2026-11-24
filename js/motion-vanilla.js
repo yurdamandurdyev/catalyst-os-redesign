@@ -360,8 +360,8 @@
     var form = document.querySelector('.chooser-form');
     if (form) {
       form.addEventListener('change', function () {
-        G.fromTo(choiceResult, { y: 8, autoAlpha: 0 }, {
-          y: 0, autoAlpha: 1, duration: 0.5, ease: 'power2.out',
+        G.fromTo(choiceResult, { scale: 0.98, y: 3 }, {
+          scale: 1, y: 0, duration: 0.35, ease: 'back.out(1.4)',
         });
       });
     }

@@ -1512,63 +1512,391 @@ h3 > span {
 
 .principles a:hover { opacity: 0.7; }
 
-/* ─── 23. CHOOSER FORM — refined radio pills ─────────────────────────────── */
+/* ─── 23. CHOOSER SECTION & FORM — sleek, compact & animated ─────────────── */
+
+.chooser {
+  padding: clamp(28px, 3.2vw, 40px) clamp(24px, 3.8vw, 44px) !important;
+  background: radial-gradient(circle at 12% 20%, rgba(27, 77, 255, 0.06), transparent 60%), var(--surface) !important;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  display: grid !important;
+  grid-template-columns: minmax(260px, 1fr) minmax(340px, 1.35fr) !important;
+  gap: clamp(24px, 3.5vw, 48px) !important;
+  align-items: center !important;
+  margin-block: 28px !important;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+html[data-theme="dark"] .chooser {
+  background: radial-gradient(circle at 10% 20%, rgba(27, 77, 255, 0.09), transparent 60%), #0c0e15 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+}
+
+html[data-theme="light"] .chooser {
+  background: radial-gradient(circle at 10% 20%, rgba(27, 77, 255, 0.05), transparent 60%), #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04);
+}
+
+/* Left column intro */
+.chooser-intro {
+  margin-bottom: 0 !important;
+}
+
+.chooser-intro h2 {
+  font-size: clamp(26px, 2.5vw, 34px) !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.025em;
+  margin: 8px 0 12px !important;
+}
+
+.chooser-desc {
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+  color: var(--muted);
+  margin: 0 0 16px !important;
+  max-width: 380px;
+}
+
+.chooser-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  background: rgba(27, 77, 255, 0.08);
+  border: 1px solid rgba(116, 151, 255, 0.22);
+  border-radius: 20px;
+  font: 600 10px/1 var(--mono);
+  color: #7497ff;
+  letter-spacing: 0.04em;
+}
+
+.chooser-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  animation: radarPulse 2s infinite ease-in-out;
+}
+
+@keyframes radarPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+
+/* Right column form */
+.chooser-form {
+  max-width: 100% !important;
+}
 
 .chooser-form fieldset {
   border: none;
   padding: 0;
-  margin: 0 0 28px;
+  margin: 0 0 16px !important;
 }
 
 .chooser-form legend {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 13px !important;
+  font-weight: 600;
   letter-spacing: -0.01em;
-  margin-bottom: 16px;
+  color: var(--ink);
+  margin-bottom: 10px !important;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .chooser-form legend span {
-  font: 9px var(--mono);
-  color: var(--blue);
-  background: var(--soft);
-  padding: 3px 7px;
+  font: 700 8.5px/1 var(--mono);
+  color: #7497ff;
+  background: rgba(27, 77, 255, 0.12);
+  border: 1px solid rgba(116, 151, 255, 0.25);
+  padding: 3px 6px;
   border-radius: 4px;
   letter-spacing: 0.04em;
 }
 
+/* Choice pills with interactive radio indicator */
+.choice-options {
+  display: flex;
+  gap: 9px !important;
+  flex-wrap: wrap;
+}
+
+/* Hide native radio completely to avoid browser ghost rendering */
+.choice-options input {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+
 .choice-options label {
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 10px 16px;
+  position: relative;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 10px !important;
+  padding: 10px 16px !important;
   cursor: pointer;
-  font-size: 13px;
-  transition:
-    border-color 0.25s ease,
-    background 0.25s ease,
-    box-shadow 0.25s ease;
+  font-size: 13px !important;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: #cbd5e1;
+  transition: all 0.25s cubic-bezier(.22,1,.36,1);
+  user-select: none;
+}
+
+/* Custom radio circle indicator */
+.choice-options label::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  flex-shrink: 0;
+  transition: all 0.25s ease;
 }
 
 .choice-options label:hover {
-  border-color: rgba(27, 77, 255, 0.25);
-  background: var(--soft);
+  transform: translateY(-2px);
+  border-color: rgba(116, 151, 255, 0.5) !important;
+  background: rgba(27, 77, 255, 0.1) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.choice-options label:hover::before {
+  border-color: #7497ff;
+  background: #7497ff;
+  box-shadow: 0 0 8px #7497ff;
 }
 
 .choice-options label:has(input:checked) {
-  border-color: var(--blue);
-  background: color-mix(in srgb, var(--soft) 80%, #1b4dff);
-  box-shadow: 0 1px 8px rgba(27, 77, 255, 0.12);
+  border-color: #3b72ff !important;
+  background: linear-gradient(135deg, rgba(27, 77, 255, 0.28), rgba(27, 77, 255, 0.14)) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 16px rgba(27, 77, 255, 0.32), inset 0 0 10px rgba(27, 77, 255, 0.18) !important;
+  transform: translateY(-1px);
 }
 
-/* Choice result box */
+.choice-options label:has(input:checked)::before {
+  background: #60a5fa;
+  border-color: #93c5fd;
+  box-shadow: 0 0 10px 2px #3b82f6;
+  transform: scale(1.2);
+}
+
+/* Reset inner span padding from content.css */
+.choice-options label > span {
+  display: inline !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  color: inherit !important;
+  transition: none !important;
+  line-height: 1 !important;
+}
+
+html[data-theme="light"] .choice-options label {
+  background: #f8fafc !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #334155 !important;
+}
+
+html[data-theme="light"] .choice-options label::before {
+  border-color: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="light"] .choice-options label:hover {
+  background: #f1f5f9 !important;
+  border-color: var(--blue) !important;
+  color: var(--blue) !important;
+}
+
+html[data-theme="light"] .choice-options label:has(input:checked) {
+  background: color-mix(in srgb, #ffffff 88%, #1b4dff) !important;
+  border-color: var(--blue) !important;
+  color: var(--blue) !important;
+}
+
+/* Choice result box — compact, glassmorphic recommendation card */
 .choice-result {
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-radius: 12px;
-  padding: 20px 24px;
-  background: var(--bg);
-  transition: border-color 0.3s ease;
+  padding: 13px 18px !important;
+  background: #0e1118 !important;
+  min-height: 0 !important;
+  margin-top: 14px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+}
+
+html[data-theme="light"] .choice-result {
+  background: #f8fafc !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.choice-result.has-result {
+  border-color: rgba(116, 151, 255, 0.55) !important;
+  background: radial-gradient(circle at 0% 50%, rgba(27, 77, 255, 0.16), rgba(14, 17, 24, 0.98)) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(27, 77, 255, 0.22) !important;
+}
+
+html[data-theme="light"] .choice-result.has-result {
+  background: color-mix(in srgb, #ffffff 92%, #1b4dff) !important;
+  border-color: rgba(27, 77, 255, 0.35) !important;
+  box-shadow: 0 4px 20px rgba(27, 77, 255, 0.08) !important;
+}
+
+.choice-result-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.choice-status-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.choice-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #64748b;
+  transition: all 0.3s ease;
+}
+
+.choice-result.has-result .choice-status-dot {
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+}
+
+.choice-result p {
+  font-size: 14px !important;
+  font-weight: 500;
+  color: #94a3b8 !important;
+  margin: 0 !important;
+  line-height: 1.35;
+}
+
+.choice-result.has-result p {
+  color: #f1f5f9 !important;
+  font-weight: 600;
+}
+
+.choice-result.has-result p span {
+  color: #7497ff !important;
+  font-weight: 700;
+  text-shadow: 0 0 12px rgba(116, 151, 255, 0.4);
+}
+
+html[data-theme="light"] .choice-result.has-result p span {
+  color: #1b4dff !important;
+}
+
+.choice-result small {
+  font-size: 10.5px !important;
+  color: #64748b !important;
+  margin-top: 3px !important;
+  display: block;
+}
+
+.choice-result.has-result small {
+  color: #94a3b8 !important;
+}
+
+/* Choice link CTA button */
+.choice-link[hidden],
+.choice-result:not(.has-result) .choice-link {
+  display: none !important;
+}
+
+.choice-link {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px !important;
+  background: #1b4dff !important;
+  border: 1px solid rgba(116, 151, 255, 0.5) !important;
+  border-radius: 8px;
+  color: #ffffff !important;
+  font-size: 11px !important;
+  font-weight: 600;
+  box-shadow: 0 0 14px rgba(27, 77, 255, 0.4);
+  transition: all 0.25s ease;
+  text-decoration: none;
+  flex-shrink: 0;
+  white-space: nowrap;
+  animation: linkPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes linkPop {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.choice-link:hover {
+  background: #2c5eff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(27, 77, 255, 0.7);
+  color: #ffffff !important;
+}
+
+.choice-link span {
+  display: inline-block;
+  border: none !important;
+  width: auto !important;
+  height: auto !important;
+  color: #ffffff !important;
+  font-size: inherit !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.choice-link i {
+  font-style: normal;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.choice-link:hover i {
+  transform: translate(2px, -2px);
+}
+
+/* Target card pulse on jump from chooser */
+@keyframes cardPulseFocus {
+  0% { box-shadow: 0 0 0 0 rgba(27, 77, 255, 0.8); }
+  50% { box-shadow: 0 0 32px 4px rgba(116, 151, 255, 0.8), 0 0 0 2px #7497ff; }
+  100% { box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4); }
+}
+
+.path-card.pulse-focus {
+  animation: cardPulseFocus 1.8s ease-out;
+  border-color: #7497ff !important;
 }
 
 /* ─── 24. NICHE PICKER — refined buttons ─────────────────────────────────── */
