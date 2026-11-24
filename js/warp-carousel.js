@@ -681,6 +681,8 @@ void main(){
       numeral: ['#3ad2ff', '#8cf6ff'],
       accent: '#7fe8ff',
       glow: '#1b4dff',
+      gradientFrom: '#00c6ff',
+      gradientTo: '#0072ff',
       mesh: ["#021b36", "#022246", "#022852", "#031e3f", "#031934", "#021831", "#022345", "#020e1e", "#01040f", "#000416", "#020b31", "#021c57", "#01172f", "#01010c", "#03001d", "#0a0f4c", "#112383", "#0b36af", "#021142", "#050b47", "#0c2e8f", "#165bd4", "#1675fd", "#167bff", "#03288e", "#0438af", "#0d66e7", "#107eec", "#30afff", "#71dcff", "#0356e8", "#0259ec", "#0945b0", "#001a49", "#3f7c9d", "#d4ffff", "#0365ff", "#0256ea", "#052a87", "#00001f", "#1f4c7b", "#9ee7ff"],
       heading: 'Единый файл правды',
       tag: '0 ₽ · демо бесплатно',
@@ -703,6 +705,8 @@ void main(){
       numeral: ['#e2a6ff', '#fff6ff'],
       accent: '#d9a8ff',
       glow: '#8b42ef',
+      gradientFrom: '#a955ff',
+      gradientTo: '#ea51ff',
       mesh: ["#4c2d5f", "#3b2245", "#3e285b", "#33204f", "#381844", "#572571", "#644096", "#4f3688", "#8358f6", "#8d54f3", "#5e20ac", "#6e24b7", "#482e6d", "#261b48", "#825bf6", "#d48cff", "#d07bff", "#b359ff", "#2d1837", "#140a1b", "#2c1d66", "#3a2383", "#693bca", "#8b42ef", "#411c5b", "#300753", "#3b006e", "#500f79", "#7e31c1", "#9541f3", "#44245a", "#3f0c69", "#6f15b9", "#d17cff", "#e2a3ff", "#a668ff", "#4b2f60", "#4d2172", "#6819aa", "#9b48dc", "#965dc9", "#7745c4"],
       heading: 'Полная версия ЕФП',
       tag: '990 ₽ · один раз',
@@ -724,6 +728,8 @@ void main(){
       numeral: ['#7497ff', '#d4e2ff'],
       accent: '#1b4dff',
       glow: '#1b4dff',
+      gradientFrom: '#2F80ED',
+      gradientTo: '#56CCF2',
       mesh: ["#07162c", "#0b254a", "#0e3466", "#14488a", "#1b5bb5", "#2472e3", "#041021", "#081d3b", "#0d2d58", "#12417d", "#1858a7", "#2172d8", "#020a16", "#05142a", "#092243", "#0e3466", "#13498f", "#1b62be", "#01060e", "#030c1b", "#061730", "#0a254b", "#0f376d", "#154d97", "#000308", "#020814", "#041124", "#071c3a", "#0b2955", "#103a77", "#000104", "#01040b", "#020917", "#041227", "#071c3b", "#0a2855", "#000002", "#000206", "#01050e", "#020b1b", "#04132a", "#061c3d"],
       heading: 'Catalyst OS',
       tag: '9 900 ₽ / месяц',
@@ -745,6 +751,8 @@ void main(){
       numeral: ['#38ef7d', '#11998e'],
       accent: '#10b981',
       glow: '#059669',
+      gradientFrom: '#10b981',
+      gradientTo: '#059669',
       mesh: ["#022c22", "#064e3b", "#065f46", "#047857", "#059669", "#10b981", "#012018", "#033b2c", "#044e39", "#066349", "#057a5b", "#0d9488", "#00140f", "#02261c", "#033426", "#044533", "#055942", "#0f766e", "#000b08", "#011610", "#022017", "#032b1f", "#04392a", "#0d5c56", "#000504", "#000c09", "#01120c", "#021a12", "#032419", "#0a433f", "#000202", "#000604", "#000b08", "#010f0b", "#02150f", "#072e2b", "#000101", "#000302", "#000504", "#000806", "#010b09", "#041b19"],
       heading: 'Курс «От чата к агенту»',
       tag: '29 900 ₽ за курс',
@@ -844,7 +852,14 @@ void main(){
       if (btnEl) {
         btnEl.href = activeCard.btnHref;
         btnEl.target = activeCard.btnTarget;
-        btnEl.innerHTML = `${activeCard.btnText} <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M4 12L12 4M5 4h7v7"/></svg>`;
+        btnEl.style.setProperty('--btn-grad-from', activeCard.gradientTo || '#0072ff');
+        btnEl.style.setProperty('--btn-grad-to', activeCard.gradientFrom || '#00c6ff');
+        const textSpan = btnEl.querySelector('.warp-btn-text');
+        if (textSpan) {
+          textSpan.textContent = activeCard.btnText;
+        } else {
+          btnEl.innerHTML = `<span class="warp-btn-glow" aria-hidden="true"></span><span class="warp-btn-bg" aria-hidden="true"></span><span class="warp-btn-content"><span class="warp-btn-text">${activeCard.btnText}</span> <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M4 12L12 4M5 4h7v7"/></svg></span>`;
+        }
       }
       if (noteEl) noteEl.textContent = activeCard.note;
 

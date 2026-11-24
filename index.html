@@ -83,19 +83,54 @@
       <p class="warp-unified-desc" id="warpActiveDesc">Один файл о компании, нейросеть отвечает по твоим правилам.</p>
       
       <div class="warp-unified-action">
-        <a class="warp-unified-btn" id="warpActiveBtn" href="https://t.me/denis_pleada_bot?start=efp_site" target="_blank" rel="noopener">
-          <span>Забрать демо · 0 ₽</span>
-          <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M4 12L12 4M5 4h7v7"/></svg>
+        <a class="warp-unified-btn" id="warpActiveBtn" href="https://t.me/denis_pleada_bot?start=efp_site" target="_blank" rel="noopener" style="--btn-grad-from: #0072ff; --btn-grad-to: #00c6ff;">
+          <span class="warp-btn-glow" aria-hidden="true"></span>
+          <span class="warp-btn-bg" aria-hidden="true"></span>
+          <span class="warp-btn-content">
+            <span class="warp-btn-text">Забрать демо · 0 ₽</span>
+            <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M4 12L12 4M5 4h7v7"/></svg>
+          </span>
         </a>
       </div>
       <small class="warp-unified-note" id="warpActiveNote">Откроется Telegram, бот проверит подписку на канал и пришлёт файл.</small>
 
-      <!-- Segmented path navigation pills in the same unified place -->
-      <div class="warp-unified-pills" role="tablist" aria-label="Форматы Catalyst OS">
-        <button class="warp-tab active" data-index="0" role="tab" aria-selected="true">01 · Демо (0 ₽)</button>
-        <button class="warp-tab" data-index="1" role="tab" aria-selected="false">02 · Файл целиком (990 ₽)</button>
-        <button class="warp-tab" data-index="2" role="tab" aria-selected="false">03 · Catalyst OS (9 900 ₽)</button>
-        <button class="warp-tab" data-index="3" role="tab" aria-selected="false">04 · Курс с Денисом (29.9k)</button>
+      <!-- Gradient Menu buttons — 21st.dev / Louis Studios inspired -->
+      <div class="warp-unified-pills gradient-menu-nav" role="tablist" aria-label="Форматы Catalyst OS">
+        <button class="warp-tab gradient-menu-item active" data-index="0" role="tab" aria-selected="true" style="--gradient-from: #00c6ff; --gradient-to: #0072ff;">
+          <span class="gmenu-glow" aria-hidden="true"></span>
+          <span class="gmenu-bg" aria-hidden="true"></span>
+          <span class="gmenu-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </span>
+          <span class="gmenu-title">01 · Демо (0 ₽)</span>
+        </button>
+
+        <button class="warp-tab gradient-menu-item" data-index="1" role="tab" aria-selected="false" style="--gradient-from: #a955ff; --gradient-to: #ea51ff;">
+          <span class="gmenu-glow" aria-hidden="true"></span>
+          <span class="gmenu-bg" aria-hidden="true"></span>
+          <span class="gmenu-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </span>
+          <span class="gmenu-title">02 · Файл целиком (990 ₽)</span>
+        </button>
+
+        <button class="warp-tab gradient-menu-item" data-index="2" role="tab" aria-selected="false" style="--gradient-from: #2F80ED; --gradient-to: #56CCF2;">
+          <span class="gmenu-glow" aria-hidden="true"></span>
+          <span class="gmenu-bg" aria-hidden="true"></span>
+          <span class="gmenu-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+          </span>
+          <span class="gmenu-title">03 · Catalyst OS (9 900 ₽)</span>
+        </button>
+
+        <button class="warp-tab gradient-menu-item" data-index="3" role="tab" aria-selected="false" style="--gradient-from: #10b981; --gradient-to: #059669;">
+          <span class="gmenu-glow" aria-hidden="true"></span>
+          <span class="gmenu-bg" aria-hidden="true"></span>
+          <span class="gmenu-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </span>
+          <span class="gmenu-title">04 · Курс с Денисом (29.9k)</span>
+        </button>
       </div>
     </div>
   </div>

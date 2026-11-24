@@ -537,34 +537,73 @@ html[data-theme="light"] .warp-unified-desc {
   justify-content: center;
 }
 
+/* ─── Gradient Menu Buttons (inspired by 21st.dev / Louis Studios) ─────────── */
+
 .warp-unified-btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 13px 30px;
-  background: #1b4dff;
-  color: #ffffff !important;
-  font-size: 14px;
-  font-weight: 600;
+  justify-content: center;
+  padding: 13px 32px;
   border-radius: 999px;
   text-decoration: none;
-  box-shadow: 0 4px 16px rgba(27, 77, 255, 0.35);
-  transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
-  white-space: nowrap;
+  cursor: pointer;
+  isolation: isolate;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: none !important;
 }
 
 .warp-unified-btn:hover {
-  background: #2b5eff;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 22px rgba(27, 77, 255, 0.45);
+  transform: translateY(-2px);
 }
 
-.warp-unified-btn svg {
+.warp-btn-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: linear-gradient(45deg, var(--btn-grad-from, #0072ff), var(--btn-grad-to, #00c6ff));
+  transition: background 0.4s ease;
+  z-index: 1;
+}
+
+.warp-btn-glow {
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  right: 12px;
+  bottom: -4px;
+  border-radius: 999px;
+  background: linear-gradient(45deg, var(--btn-grad-from, #0072ff), var(--btn-grad-to, #00c6ff));
+  filter: blur(16px);
+  opacity: 0.5;
+  transition: opacity 0.4s ease, filter 0.4s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.warp-unified-btn:hover .warp-btn-glow {
+  opacity: 0.85;
+  filter: blur(20px);
+}
+
+.warp-btn-content {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff !important;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.warp-btn-content svg {
   stroke: currentColor;
   transition: transform 0.2s ease;
 }
 
-.warp-unified-btn:hover svg {
+.warp-unified-btn:hover .warp-btn-content svg {
   transform: translate(2px, -2px);
 }
 
@@ -579,62 +618,119 @@ html[data-theme="light"] .warp-unified-note {
   color: #64748b !important;
 }
 
-/* Unified segmented pills below */
-.warp-unified-pills {
+/* Gradient Menu Navigation Pills */
+.gradient-menu-nav {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   margin-top: 14px;
-  padding: 4px;
+  padding: 6px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-html[data-theme="light"] .warp-unified-pills {
-  background: rgba(0, 0, 0, 0.04);
+html[data-theme="light"] .gradient-menu-nav {
+  background: rgba(0, 0, 0, 0.03);
   border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-.warp-tab {
+.gradient-menu-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 999px;
-  padding: 7px 14px;
-  font-size: 12px;
-  font-weight: 500;
   color: #94a3b8;
   cursor: pointer;
-  transition: all 0.18s ease;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   user-select: none;
+  isolation: isolate;
 }
 
-.warp-tab:hover {
-  color: #ffffff;
+html[data-theme="light"] .gradient-menu-item {
+  color: #475569;
 }
 
-.warp-tab.active {
-  background: #1b4dff;
-  border-color: #1b4dff;
-  color: #ffffff;
+/* Gradient Background on hover/active */
+.gradient-menu-item .gmenu-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: linear-gradient(45deg, var(--gradient-from), var(--gradient-to));
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 1;
+}
+
+/* Blur Glow underneath on hover/active */
+.gradient-menu-item .gmenu-glow {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  right: 6px;
+  bottom: -4px;
+  border-radius: 999px;
+  background: linear-gradient(45deg, var(--gradient-from), var(--gradient-to));
+  filter: blur(14px);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.gradient-menu-item .gmenu-icon {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.gradient-menu-item .gmenu-title {
+  position: relative;
+  z-index: 2;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: inherit;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+/* Active and Hover states */
+.gradient-menu-item:hover,
+.gradient-menu-item.active {
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+.gradient-menu-item:hover .gmenu-bg,
+.gradient-menu-item.active .gmenu-bg {
+  opacity: 1;
+}
+
+.gradient-menu-item:hover .gmenu-glow {
+  opacity: 0.5;
+}
+
+.gradient-menu-item.active .gmenu-glow {
+  opacity: 0.75;
+}
+
+.gradient-menu-item.active .gmenu-title {
   font-weight: 600;
-  box-shadow: 0 2px 10px rgba(27, 77, 255, 0.35);
 }
 
-html[data-theme="light"] .warp-tab {
-  color: #64748b;
-}
-
-html[data-theme="light"] .warp-tab:hover {
-  color: #0f172a;
-}
-
-html[data-theme="light"] .warp-tab.active {
-  background: #1b4dff;
-  color: #ffffff;
-  border-color: #1b4dff;
-  box-shadow: 0 2px 8px rgba(27, 77, 255, 0.25);
+.gradient-menu-item:hover .gmenu-icon {
+  transform: scale(1.1);
 }
 
 @media (max-width: 768px) {
@@ -2121,36 +2217,37 @@ html[data-theme="light"] .choice-result.has-result p {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 8px 16px !important;
-  background: #f4f4f5 !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  border-radius: 6px;
-  color: #11141c !important;
-  font-size: 12px !important;
+  padding: 10px 22px !important;
+  background: linear-gradient(45deg, #1b4dff, #00c6ff) !important;
+  border: none !important;
+  border-radius: 999px !important;
+  color: #ffffff !important;
+  font-size: 13px !important;
   font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  transition: background 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+  box-shadow: 0 4px 16px rgba(27, 77, 255, 0.35) !important;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1) !important;
   text-decoration: none;
   flex-shrink: 0;
   white-space: nowrap;
 }
 
 .choice-link:hover {
-  background: #ffffff !important;
-  border-color: rgba(255, 255, 255, 0.25) !important;
-  transform: translateY(-1px);
-  color: #000000 !important;
+  background: linear-gradient(45deg, #2b5eff, #38d8ff) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(27, 77, 255, 0.5) !important;
+  color: #ffffff !important;
 }
 
 html[data-theme="light"] .choice-link {
-  background: #11141c !important;
+  background: linear-gradient(45deg, #1b4dff, #0072ff) !important;
   color: #ffffff !important;
-  border-color: transparent !important;
+  box-shadow: 0 4px 16px rgba(27, 77, 255, 0.28) !important;
 }
 
 html[data-theme="light"] .choice-link:hover {
-  background: #232733 !important;
+  background: linear-gradient(45deg, #2b5eff, #1b4dff) !important;
   color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(27, 77, 255, 0.4) !important;
 }
 
 .choice-link > span,
