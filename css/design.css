@@ -618,98 +618,110 @@ html[data-theme="light"] .warp-unified-note {
   color: #64748b !important;
 }
 
-/* Gradient Menu Navigation Pills */
+/* ─── Gradient Menu Navigation (21st.dev / Louis Studios exact morphing) ─── */
 .gradient-menu-nav {
   display: flex;
-  gap: 8px;
+  gap: 16px;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
-  margin-top: 14px;
-  padding: 6px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-html[data-theme="light"] .gradient-menu-nav {
-  background: rgba(0, 0, 0, 0.03);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  position: relative;
+  z-index: 10;
 }
 
 .gradient-menu-item {
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
+  width: 58px;
+  height: 58px;
+  background: rgba(255, 255, 255, 0.06);
   border-radius: 999px;
-  background: transparent;
-  border: 1px solid transparent;
-  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1), background 0.5s ease, box-shadow 0.5s ease;
   cursor: pointer;
-  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   user-select: none;
   isolation: isolate;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  overflow: visible;
+  flex-shrink: 0;
 }
 
 html[data-theme="light"] .gradient-menu-item {
-  color: #475569;
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
-/* Gradient Background on hover/active */
+/* Gradient background on hover & active */
 .gradient-menu-item .gmenu-bg {
   position: absolute;
   inset: 0;
   border-radius: 999px;
   background: linear-gradient(45deg, var(--gradient-from), var(--gradient-to));
   opacity: 0;
-  transition: opacity 0.35s ease;
+  transition: opacity 0.5s ease;
   z-index: 1;
 }
 
-/* Blur Glow underneath on hover/active */
+/* Blur glow underneath */
 .gradient-menu-item .gmenu-glow {
   position: absolute;
-  top: 6px;
-  left: 6px;
-  right: 6px;
-  bottom: -4px;
+  top: 10px;
+  left: 0;
+  right: 0;
+  height: 100%;
   border-radius: 999px;
   background: linear-gradient(45deg, var(--gradient-from), var(--gradient-to));
-  filter: blur(14px);
+  filter: blur(15px);
   opacity: 0;
-  transition: opacity 0.35s ease;
-  z-index: 0;
+  z-index: -1;
+  transition: opacity 0.5s ease;
   pointer-events: none;
 }
 
+/* Icon (scales to 0 on hover and active) */
 .gradient-menu-item .gmenu-icon {
   position: relative;
-  z-index: 2;
-  display: inline-flex;
+  z-index: 10;
+  display: flex;
   align-items: center;
   justify-content: center;
-  color: inherit;
-  transition: transform 0.3s ease, color 0.3s ease;
+  color: #94a3b8;
+  transform: scale(1);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), color 0.45s ease;
+  pointer-events: none;
 }
 
+html[data-theme="light"] .gradient-menu-item .gmenu-icon {
+  color: #64748b;
+}
+
+/* Title (scales up on hover and active) */
 .gradient-menu-item .gmenu-title {
-  position: relative;
-  z-index: 2;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  color: inherit;
-  transition: color 0.3s ease;
+  position: absolute;
+  z-index: 10;
+  color: #ffffff !important;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11.5px;
+  font-weight: 700;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.1s, opacity 0.35s ease 0.1s;
   white-space: nowrap;
+  pointer-events: none;
 }
 
-/* Active and Hover states */
+/* Morphing: hover or active expands circle into 175px pill */
 .gradient-menu-item:hover,
 .gradient-menu-item.active {
-  color: #ffffff !important;
-  transform: translateY(-1px);
+  width: 175px;
+  box-shadow: none;
+  border-color: transparent;
 }
 
 .gradient-menu-item:hover .gmenu-bg,
@@ -718,19 +730,45 @@ html[data-theme="light"] .gradient-menu-item {
 }
 
 .gradient-menu-item:hover .gmenu-glow {
-  opacity: 0.5;
+  opacity: 0.55;
 }
 
 .gradient-menu-item.active .gmenu-glow {
-  opacity: 0.75;
+  opacity: 0.65;
 }
 
+.gradient-menu-item:hover .gmenu-icon,
+.gradient-menu-item.active .gmenu-icon {
+  transform: scale(0);
+  opacity: 0;
+}
+
+.gradient-menu-item:hover .gmenu-title,
 .gradient-menu-item.active .gmenu-title {
-  font-weight: 600;
+  transform: scale(1);
+  opacity: 1;
 }
 
-.gradient-menu-item:hover .gmenu-icon {
-  transform: scale(1.1);
+@media (max-width: 768px) {
+  .gradient-menu-nav {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .gradient-menu-item {
+    width: 48px;
+    height: 48px;
+  }
+  .gradient-menu-item:hover,
+  .gradient-menu-item.active {
+    width: 148px;
+  }
+  .gradient-menu-item .gmenu-title {
+    font-size: 10.5px;
+  }
+  .gradient-menu-item .gmenu-icon svg {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 @media (max-width: 768px) {
