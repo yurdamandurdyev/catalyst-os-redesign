@@ -28,23 +28,20 @@
     $('#choiceResult').textContent = `Твой путь: ${routeNames[route]}`;
     $('#choiceHint').textContent = where === 'chat' && want === 'ready' ? 'Сначала забрать файл правды, затем подключить Catalyst OS.' : 'Оптимальный старт под твою задачу.';
     $('#choiceLink').hidden = false;
-    $('#choiceLink').href = `#path-${route}`;
+    $('#choiceLink').href = '#start';
+    $('#choiceLink').dataset.route = route;
     $('.choice-result').classList.add('has-result');
-    $$('.path-card').forEach(card => {
-      const selected = card.id === `path-${route}`;
-      card.classList.toggle('recommended', selected);
-      if (selected) card.setAttribute('aria-label', `Рекомендованный путь: ${routeNames[route]}`);
-      else card.removeAttribute('aria-label');
-    });
   });
   $('#choiceLink').addEventListener('click', event => {
     event.preventDefault();
-    const target = document.querySelector(event.currentTarget.getAttribute('href'));
+    const route = event.currentTarget.dataset.route || 'efp';
+    const routeMap = { efp: 0, os: 2, kurs: 3 };
+    if (window.warpCarousel && routeMap[route] !== undefined) {
+      window.warpCarousel.setIndex(routeMap[route]);
+    }
+    const target = document.getElementById('start');
     if (!target) return;
-    target.focus({ preventScroll: true });
     target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
-    target.classList.add('pulse-focus');
-    setTimeout(() => target.classList.remove('pulse-focus'), 1600);
   });
 
   const niches = {
