@@ -803,6 +803,20 @@ void main(){
       if (gls) uploadCards(gls, cardCanvases);
     };
 
+    const getUnitCss = r => {
+      const w = r.width;
+      const h = r.height;
+      if (w >= 1400) {
+        return Math.min(1.55, Math.max(1.3, h / 390));
+      } else if (w >= 1024) {
+        return Math.min(1.42, Math.max(1.18, Math.min(w / 880, h / 390)));
+      } else if (w >= 640) {
+        return Math.min(1.15, Math.max(0.98, Math.min(w / 680, h / 390)));
+      } else {
+        return Math.min(0.92, Math.max(0.76, (w - 24) / 320));
+      }
+    };
+
     let W = 0, H = 0, unit = 1;
     const resize = () => {
       const r = wrap.getBoundingClientRect();
@@ -811,7 +825,8 @@ void main(){
       H = Math.max(2, Math.round(r.height * dpr));
       if (canvas.width !== W) canvas.width = W;
       if (canvas.height !== H) canvas.height = H;
-      unit = Math.min(W / 720, H / 440);
+      const unitCss = getUnitCss(r);
+      unit = unitCss * dpr;
       const want = Math.min(1024, Math.max(256, Math.round(CW * unit * 1.25)));
       if (want !== texW) paintAll(want);
     };
@@ -1003,7 +1018,7 @@ void main(){
     wrap.addEventListener('pointermove', e => {
       if (live.mode !== 'drag') return;
       const r = wrap.getBoundingClientRect();
-      const unitCss = Math.min(r.width / 720, r.height / 440);
+      const unitCss = getUnitCss(r);
       const now = performance.now() / 1000;
       const P = live.dragP - (e.clientX - live.dragX) / (unitCss * 280);
       const dt = Math.max(1 / 240, now - live.lastT);
@@ -1021,9 +1036,10 @@ void main(){
       if (!live.moved) {
         live.mode = 'rest';
         const r = wrap.getBoundingClientRect();
-        const u = (e.clientX - r.left - r.width / 2) / Math.min(r.width / 720, r.height / 440);
-        if (u > 120) setCardIndex(current + 1);
-        else if (u < -120) setCardIndex(current - 1);
+        const unitCss = getUnitCss(r);
+        const u = (e.clientX - r.left - r.width / 2) / (unitCss * 180);
+        if (u > 0.8) setCardIndex(current + 1);
+        else if (u < -0.8) setCardIndex(current - 1);
         return;
       }
       if (now - live.lastT > 0.08) live.v = 0;
