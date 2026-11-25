@@ -3094,3 +3094,443 @@ html[data-theme="dark"] .mission-cta {
 }
 
 .course-reminder a:hover { opacity: 0.7; }
+
+/* ─── 34. 3-PILLAR PRODUCT GRID, VIEW SWITCHER & COURSE BRIDGE ─────────────── */
+
+.paths-view-switch {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  padding: 3px;
+  gap: 3px;
+}
+
+html[data-theme="light"] .paths-view-switch {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.view-switch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 13px;
+  border-radius: 9999px;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  font: 500 11px/1.2 var(--mono);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.view-switch-btn:hover {
+  color: #f1f5f9;
+}
+
+html[data-theme="light"] .view-switch-btn:hover {
+  color: #0f172a;
+}
+
+.view-switch-btn.active {
+  background: #1b4dff;
+  color: #ffffff;
+  box-shadow: 0 2px 10px rgba(27, 77, 255, 0.38);
+  font-weight: 600;
+}
+
+.paths-grid-wrap {
+  width: 100%;
+  margin: 32px 0 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.paths-grid-wrap[hidden] {
+  display: none !important;
+}
+
+.path-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  align-items: stretch;
+}
+
+@media (max-width: 1024px) {
+  .path-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.path-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px 22px 20px !important;
+  background: #11141c;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s cubic-bezier(.22,1,.36,1);
+}
+
+html[data-theme="light"] .path-card {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.path-card:hover {
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  transform: translateY(-4px);
+}
+
+html[data-theme="light"] .path-card:hover {
+  border-color: rgba(0, 0, 0, 0.16) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Featured Card 2 */
+.path-card.featured {
+  background: linear-gradient(180deg, #141828 0%, #10131e 100%);
+  border-color: rgba(47, 128, 237, 0.45);
+  box-shadow: 0 8px 30px rgba(47, 128, 237, 0.12);
+}
+
+.path-card.featured::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #2F80ED, #56CCF2);
+}
+
+html[data-theme="light"] .path-card.featured {
+  background: #ffffff;
+  border-color: rgba(47, 128, 237, 0.4);
+  box-shadow: 0 8px 30px rgba(47, 128, 237, 0.08);
+}
+
+/* Card Features List */
+.path-features {
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  flex-grow: 1;
+}
+
+.path-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: #cbd5e1;
+}
+
+html[data-theme="light"] .path-features li {
+  color: #334155;
+}
+
+.path-features li svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #38ef7d;
+}
+
+/* In-Card Upgrade Box (Card 1) */
+.card-upgrade-box {
+  margin: 14px 0 16px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(169, 85, 255, 0.08);
+  border: 1px solid rgba(169, 85, 255, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.card-upgrade-box:hover {
+  background: rgba(169, 85, 255, 0.12);
+  border-color: rgba(169, 85, 255, 0.4);
+}
+
+html[data-theme="light"] .card-upgrade-box {
+  background: #faf5ff;
+  border-color: rgba(169, 85, 255, 0.3);
+}
+
+.upgrade-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.upgrade-chip {
+  font: 700 8.5px/1 var(--mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #c084fc;
+  background: rgba(169, 85, 255, 0.18);
+  padding: 2.5px 6px;
+  border-radius: 4px;
+}
+
+.upgrade-price {
+  font-size: 13px;
+  font-weight: 700;
+  color: #e9d5ff;
+}
+
+html[data-theme="light"] .upgrade-price {
+  color: #7e22ce;
+}
+
+.card-upgrade-box p {
+  font-size: 10.5px !important;
+  line-height: 1.4 !important;
+  color: #cbd5e1 !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+}
+
+html[data-theme="light"] .card-upgrade-box p {
+  color: #475569 !important;
+}
+
+.upgrade-link {
+  font: 600 11px/1.3 var(--mono);
+  color: #d8b4fe !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s ease;
+  align-self: flex-start;
+  margin-top: 2px;
+}
+
+.upgrade-link:hover {
+  opacity: 0.8;
+}
+
+/* Card 3 Gift Banner */
+.card-gift-banner {
+  margin: 14px 0 16px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+html[data-theme="light"] .card-gift-banner {
+  background: #f0fdf4;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.gift-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gift-icon {
+  font-size: 13px;
+}
+
+.gift-badge {
+  font: 700 8.5px/1 var(--mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.18);
+  padding: 2.5px 6px;
+  border-radius: 4px;
+}
+
+.card-gift-banner p {
+  font-size: 10.5px !important;
+  line-height: 1.4 !important;
+  color: #cbd5e1 !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+}
+
+html[data-theme="light"] .card-gift-banner p {
+  color: #334155 !important;
+}
+
+/* Path Actions */
+.path-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.path-actions .button {
+  width: 100%;
+  text-align: center;
+  padding: 12px 18px !important;
+  font-size: 12px !important;
+  font-weight: 600;
+  border-radius: 9px;
+  background: #1b4dff;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+.path-actions .button.featured-btn {
+  background: linear-gradient(135deg, #2F80ED, #1b4dff);
+  box-shadow: 0 4px 14px rgba(47, 128, 237, 0.35);
+}
+
+.path-actions .button.course-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+}
+
+.path-detail-trigger {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font: 500 11px/1.2 var(--mono);
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.path-detail-trigger:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #f1f5f9;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+html[data-theme="light"] .path-detail-trigger {
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #64748b;
+}
+
+html[data-theme="light"] .path-detail-trigger:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: #0f172a;
+}
+
+/* Interactive Target Highlight animation */
+@keyframes cardTargetPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(27, 77, 255, 0.7);
+    border-color: #1b4dff;
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(27, 77, 255, 0);
+    border-color: #00c6ff;
+    transform: scale(1.02);
+  }
+  100% {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+    transform: scale(1);
+  }
+}
+
+.card-target-highlight {
+  animation: cardTargetPulse 1.8s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+/* Product Course Bridge */
+.product-course-bridge {
+  margin-top: 36px;
+  padding: 24px 28px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(27, 77, 255, 0.08) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+html[data-theme="light"] .product-course-bridge {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(27, 77, 255, 0.05) 100%);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.bridge-info h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 6px 0;
+  letter-spacing: -0.02em;
+}
+
+.bridge-info p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.bridge-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 9px;
+  background: #10b981;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bridge-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+}
+
+.core-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0;
+}
+
+.core-pills span {
+  font: 500 10px/1.2 var(--mono);
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+}
+
+html[data-theme="light"] .core-pills span {
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+  color: #334155;
+}
+
+@media (max-width: 768px) {
+  .product-course-bridge {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+

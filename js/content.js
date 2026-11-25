@@ -7,21 +7,21 @@
   const routeMeta = {
     efp: {
       name: 'Единый файл правды',
-      badge: '01 / Демо бесплатно · 0 ₽',
+      badge: '01 / Демо бесплатно · 0 ₽ (апгрейд 990 ₽)',
       color: '#00c6ff',
       glow: 'rgba(0, 198, 255, 0.4)',
       btnText: 'Забрать демо (0 ₽)'
     },
     os: {
       name: 'Catalyst OS',
-      badge: '03 / Catalyst OS · 9 900 ₽',
+      badge: '02 / Catalyst OS · 9 900 ₽ / мес',
       color: '#2F80ED',
       glow: 'rgba(47, 128, 237, 0.4)',
       btnText: 'Открыть Catalyst OS'
     },
     kurs: {
       name: 'Курс «От чата к агенту»',
-      badge: '04 / Курс с Денисом · 29 900 ₽',
+      badge: '03 / Курс с Денисом · 29 900 ₽',
       color: '#10b981',
       glow: 'rgba(16, 185, 129, 0.4)',
       btnText: 'Программа курса'
@@ -105,26 +105,102 @@
       choiceLink.addEventListener('click', event => {
         event.preventDefault();
         const route = event.currentTarget.dataset.route || 'efp';
-        const routeMap = { efp: 0, os: 2, kurs: 3 };
+        const routeMap = { efp: 0, os: 1, kurs: 2 };
         const targetIdx = routeMap[route] !== undefined ? routeMap[route] : 0;
         
-        if (window.warpCarousel) {
-          window.warpCarousel.setIndex(targetIdx);
-        }
-        
-        const target = document.getElementById('start');
-        if (target) {
-          target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
-        }
+        // If 3D view is active, spin to it; otherwise highlight card in grid
+        const gridWrap = document.getElementById('pathsGridWrap');
+        const is3DActive = gridWrap && gridWrap.hidden;
 
-        setTimeout(() => {
-          if (window.warpCarousel && window.warpCarousel.openModal) {
-            window.warpCarousel.openModal(targetIdx);
+        if (is3DActive) {
+          if (window.warpCarousel) {
+            window.warpCarousel.setIndex(targetIdx);
           }
-        }, 650);
+          const target = document.getElementById('start');
+          if (target) {
+            target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+          }
+          setTimeout(() => {
+            if (window.warpCarousel && window.warpCarousel.openModal) {
+              window.warpCarousel.openModal(targetIdx);
+            }
+          }, 650);
+        } else {
+          const targetCard = document.getElementById(`card-${route}`);
+          if (targetCard) {
+            targetCard.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+            targetCard.classList.add('card-target-highlight');
+            setTimeout(() => targetCard.classList.remove('card-target-highlight'), 2200);
+          } else {
+            const target = document.getElementById('start');
+            if (target) target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+          }
+        }
       });
     }
   }
+
+  // Paths View Switcher: "Все 3 пути" vs "3D-орбита"
+  const viewGridBtn = $('#viewGridBtn');
+  const view3dBtn = $('#view3dBtn');
+  const pathsGridWrap = $('#pathsGridWrap');
+  const paths3dWrap = $('#paths3dWrap');
+
+  function setPathsView(view) {
+    if (view === '3d') {
+      if (pathsGridWrap) pathsGridWrap.hidden = true;
+      if (paths3dWrap) paths3dWrap.hidden = false;
+      if (view3dBtn) {
+        view3dBtn.classList.add('active');
+        view3dBtn.setAttribute('aria-selected', 'true');
+      }
+      if (viewGridBtn) {
+        viewGridBtn.classList.remove('active');
+        viewGridBtn.setAttribute('aria-selected', 'false');
+      }
+      // Trigger canvas resize
+      window.dispatchEvent(new Event('resize'));
+    } else {
+      if (pathsGridWrap) pathsGridWrap.hidden = false;
+      if (paths3dWrap) paths3dWrap.hidden = true;
+      if (viewGridBtn) {
+        viewGridBtn.classList.add('active');
+        viewGridBtn.setAttribute('aria-selected', 'true');
+      }
+      if (view3dBtn) {
+        view3dBtn.classList.remove('active');
+        view3dBtn.setAttribute('aria-selected', 'false');
+      }
+    }
+  }
+
+  if (viewGridBtn) viewGridBtn.addEventListener('click', () => setPathsView('grid'));
+  if (view3dBtn) view3dBtn.addEventListener('click', () => setPathsView('3d'));
+
+  // Path Cards interactive click & detail triggers
+  const routeIdxMap = { efp: 0, os: 1, kurs: 2 };
+  $$('.path-detail-trigger').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const pathCode = btn.dataset.path || 'efp';
+      const idx = routeIdxMap[pathCode] !== undefined ? routeIdxMap[pathCode] : 0;
+      if (window.warpCarousel && window.warpCarousel.openModal) {
+        window.warpCarousel.openModal(idx);
+      }
+    });
+  });
+
+  $$('.path-card').forEach(card => {
+    card.addEventListener('click', e => {
+      // Don't trigger modal if clicking directly on link or button
+      if (e.target.closest('a') || e.target.closest('button')) return;
+      const pathCode = card.dataset.path || 'efp';
+      const idx = routeIdxMap[pathCode] !== undefined ? routeIdxMap[pathCode] : 0;
+      if (window.warpCarousel && window.warpCarousel.openModal) {
+        window.warpCarousel.openModal(idx);
+      }
+    });
+  });
 
   const niches = {
     any: 'Деньги, звонки, заявки и команда.',

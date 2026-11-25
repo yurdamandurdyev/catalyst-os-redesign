@@ -666,16 +666,16 @@ void main(){
 
   const mod = (a, n) => ((a % n) + n) % n;
 
-  // 4 Catalyst OS Cards
+  // 3 Consolidated Catalyst OS Product Pillars (All visible simultaneously in grid or in 3D orbit)
   const PATH_CARDS = [
     {
       id: 'path-efp',
       code: 'efp',
-      badge: '01 / Хочу попробовать',
+      badge: '01 / Быстрый старт',
       title: 'Единый файл\nправды',
       value: '0',
       unit: '₽',
-      footer: 'Демо бесплатно · Telegram-бот',
+      footer: 'Демо 0 ₽ · Апгрейд 990 ₽',
       detail: 'slider',
       labels: ['Контекст', 'Результат'],
       numeral: ['#3ad2ff', '#8cf6ff'],
@@ -685,57 +685,28 @@ void main(){
       gradientTo: '#0072ff',
       mesh: ["#021b36", "#022246", "#022852", "#031e3f", "#031934", "#021831", "#022345", "#020e1e", "#01040f", "#000416", "#020b31", "#021c57", "#01172f", "#01010c", "#03001d", "#0a0f4c", "#112383", "#0b36af", "#021142", "#050b47", "#0c2e8f", "#165bd4", "#1675fd", "#167bff", "#03288e", "#0438af", "#0d66e7", "#107eec", "#30afff", "#71dcff", "#0356e8", "#0259ec", "#0945b0", "#001a49", "#3f7c9d", "#d4ffff", "#0365ff", "#0256ea", "#052a87", "#00001f", "#1f4c7b", "#9ee7ff"],
       heading: 'Единый файл правды',
-      tag: '0 ₽ · демо бесплатно',
-      desc: 'Один файл о компании, нейросеть отвечает по твоим правилам.',
+      tag: '0 ₽ · демо бесплатно (апгрейд 990 ₽)',
+      desc: 'Один файл о компании — нейросеть отвечает строго по твоим правилам. Демо за 0 ₽ с возможностью апгрейда до полной версии за 990 ₽.',
       features: [
         'Короткий файл о компании в формате .MD за один вечер',
         'Нейросеть отвечает строго по вашим правилам без галлюцинаций',
-        'Готовая структура под любую LLM (ChatGPT, Claude, DeepSeek)',
-        'Мгновенное получение через Telegram-бота'
+        'Работает в любой LLM: ChatGPT, Claude, DeepSeek, Cursor',
+        'Опция апгрейда: полная версия за 990 ₽ навсегда (CEO-агент, отделы, системный журнал)',
+        'Мгновенное получение демо в Telegram-боте'
       ],
       btnText: 'Забрать демо · 0 ₽',
       btnHref: 'https://t.me/denis_pleada_bot?start=efp_site',
       btnTarget: '_blank',
-      note: 'Откроется Telegram, бот проверит подписку на канал и пришлёт файл.'
-    },
-    {
-      id: 'path-efp-full',
-      code: 'efp-full',
-      badge: '02 / Хочу файл целиком',
-      title: 'Полная версия\nЕФП навсегда',
-      value: '990',
-      unit: '₽',
-      footer: 'CEO-агент, отделы, журнал',
-      detail: 'cross',
-      labels: ['Файл .MD', 'Вход', 'Итог'],
-      numeral: ['#e2a6ff', '#fff6ff'],
-      accent: '#d9a8ff',
-      glow: '#8b42ef',
-      gradientFrom: '#a955ff',
-      gradientTo: '#ea51ff',
-      mesh: ["#4c2d5f", "#3b2245", "#3e285b", "#33204f", "#381844", "#572571", "#644096", "#4f3688", "#8358f6", "#8d54f3", "#5e20ac", "#6e24b7", "#482e6d", "#261b48", "#825bf6", "#d48cff", "#d07bff", "#b359ff", "#2d1837", "#140a1b", "#2c1d66", "#3a2383", "#693bca", "#8b42ef", "#411c5b", "#300753", "#3b006e", "#500f79", "#7e31c1", "#9541f3", "#44245a", "#3f0c69", "#6f15b9", "#d17cff", "#e2a3ff", "#a668ff", "#4b2f60", "#4d2172", "#6819aa", "#9b48dc", "#965dc9", "#7745c4"],
-      heading: 'Полная версия ЕФП',
-      tag: '990 ₽ · один раз',
-      desc: 'CEO-агент, отделы, системный журнал и готовый контекст компании навсегда.',
-      features: [
-        'Полная архитектура Единого файла правды под ключ',
-        'CEO-агент, специализированные отделы и системный журнал',
-        'Файлы остаются в компании навсегда, без ежемесячных оплат',
-        'Методичка и видео-разбор по внедрению в рабочий процесс'
-      ],
-      btnText: 'Подробнее о файле',
-      btnHref: 'https://catalystos.ru/efp',
-      btnTarget: '_blank',
-      note: 'Остаётся в компании навсегда. Готовая архитектура под любую LLM.'
+      note: 'Откроется Telegram, бот пришлёт файл. Полную версию можно взять сразу за 990 ₽.'
     },
     {
       id: 'path-os',
       code: 'os',
-      badge: '03 / Хочу готовое',
+      badge: '02 / Взять готовое · Рекомендуем',
       title: 'Catalyst OS\nЭкраны & MCP',
       value: '9 900',
       unit: '₽/мес',
-      footer: 'Скиллы под твою задачу',
+      footer: '1 200+ наработок · MCP',
       detail: 'ring',
       numeral: ['#7497ff', '#d4e2ff'],
       accent: '#1b4dff',
@@ -745,14 +716,15 @@ void main(){
       mesh: ["#07162c", "#0b254a", "#0e3466", "#14488a", "#1b5bb5", "#2472e3", "#041021", "#081d3b", "#0d2d58", "#12417d", "#1858a7", "#2172d8", "#020a16", "#05142a", "#092243", "#0e3466", "#13498f", "#1b62be", "#01060e", "#030c1b", "#061730", "#0a254b", "#0f376d", "#154d97", "#000308", "#020814", "#041124", "#071c3a", "#0b2955", "#103a77", "#000104", "#01040b", "#020917", "#041227", "#071c3b", "#0a2855", "#000002", "#000206", "#01050e", "#020b1b", "#04132a", "#061c3d"],
       heading: 'Catalyst OS',
       tag: '9 900 ₽ / месяц',
-      desc: 'Готовые экраны и скиллы по MCP, решение на твоих корпоративных данных.',
+      desc: 'Готовые экраны, навыки и ИИ-сотрудники по MCP. Решения строятся на твоих корпоративных данных.',
       features: [
         '1 200+ готовых корпоративных наработок и экранов',
         '370+ навыков и 100+ ИИ-сотрудников под реальные задачи',
         'Подключение по MCP к Cursor, Claude Code, Codex за 2 минуты',
-        'Решения строятся прямо на ваших реальных данных компании'
+        'Решения строятся прямо на ваших реальных данных компании',
+        'Все обновления библиотеки входят в подписку'
       ],
-      btnText: 'Как это работает',
+      btnText: 'Подключить Catalyst OS',
       btnHref: 'https://catalystos.ru/os',
       btnTarget: '_self',
       note: 'Уже работаешь в Cursor, Claude Code или Codex? Этот путь для тебя.'
@@ -760,7 +732,7 @@ void main(){
     {
       id: 'path-kurs',
       code: 'kurs',
-      badge: '04 / Хочу научиться с Денисом',
+      badge: '03 / Обучение с автором',
       title: 'Курс Дениса\n«От чата к агенту»',
       value: '29 900',
       unit: '₽',
@@ -778,7 +750,7 @@ void main(){
       features: [
         'Личное обучение и сопровождение от Дениса Леушина',
         'Доведёшь одну конкретную задачу компании до измеримого результата',
-        'В подарок: полная версия ЕФП навсегда + 1 месяц Catalyst OS',
+        'В подарок: полная версия ЕФП навсегда + 1 месяц Catalyst OS (экономия 10 890 ₽)',
         '12 месяцев доступа к закрытому комьюнити и разборам проектов'
       ],
       btnText: 'Программа курса',
@@ -886,6 +858,7 @@ void main(){
     const modalBtn = document.getElementById('warpModalBtn');
     const modalBtnText = document.getElementById('warpModalBtnText');
     const modalNote = document.getElementById('warpModalNote');
+    const modalUpgrade = document.getElementById('warpModalUpgrade');
     const stageHintBtn = document.getElementById('warpStageHint');
 
     function openCardModal(idx) {
@@ -897,6 +870,9 @@ void main(){
       if (modalPrice) modalPrice.textContent = card.tag;
       if (modalDesc) modalDesc.textContent = card.desc;
       if (modalNote) modalNote.textContent = card.note;
+      if (modalUpgrade) {
+        modalUpgrade.hidden = card.code !== 'efp';
+      }
 
       if (modalBtn) {
         modalBtn.href = card.btnHref;

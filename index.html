@@ -51,15 +51,163 @@
 <section class="section paths" id="start" data-source-block="entries">
   <div class="section-kicker">
     <span>01 — Точки входа</span>
+    <div class="paths-view-switch" role="tablist" aria-label="Формат отображения путей">
+      <button type="button" class="view-switch-btn active" id="viewGridBtn" role="tab" aria-selected="true" aria-controls="pathsGridWrap">
+        <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z"/></svg>
+        <span>Все 3 пути</span>
+      </button>
+      <button type="button" class="view-switch-btn" id="view3dBtn" role="tab" aria-selected="false" aria-controls="paths3dWrap">
+        <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5a.5.5 0 0 0-.002.923l6 2.5a.5.5 0 0 0 .372 0l6-2.5a.5.5 0 0 0-.002-.923l-5.968-2.387zM2.5 7.633V11.5a.5.5 0 0 0 .307.462l5 2a.5.5 0 0 0 .386 0l5-2a.5.5 0 0 0 .307-.462V7.633l-5.307 2.211a.5.5 0 0 1-.386 0L2.5 7.633z"/></svg>
+        <span>3D-орбита</span>
+      </button>
+    </div>
     <a href="#chooser">Помочь выбрать ↘</a>
   </div>
   <div class="section-heading">
     <h2>Какой путь <span>твой?</span></h2>
-    <p>Начни с того, что нужно сейчас.<br>Листай 3D-орбиту или выбери формат ниже.</p>
+    <p>Весь спектр услуг перед глазами — начни с бесплатного демо или выбери готовые решения и курс.</p>
   </div>
 
-  <!-- Unified 3D Warp Stage -->
-  <div class="warp-unified-block">
+  <!-- Primary View: 3 Consolidated Product Pillars Visible Immediately -->
+  <div class="paths-grid-wrap" id="pathsGridWrap">
+    <div class="path-grid">
+      <!-- Card 1: EFP Free Demo + In-card Upgrade -->
+      <article class="path-card" id="card-efp" data-path="efp" tabindex="0" role="region" aria-label="Единый файл правды">
+        <div class="path-top">
+          <span class="path-badge">01 / Быстрый старт</span>
+          <span class="path-meta">.MD контекст</span>
+        </div>
+        <div class="path-visual" aria-hidden="true">
+          <div class="file-sheet">
+            <span>ЕДИНЫЙ ФАЙЛ ПРАВДЫ</span>
+            <b>truth.md</b>
+            <i></i><i></i><i></i>
+            <small>Контекст для любой LLM</small>
+          </div>
+        </div>
+        <h3>Единый файл правды</h3>
+        <p>Один файл о компании — нейросеть отвечает строго по твоим правилам без галлюцинаций.</p>
+        <div class="path-price">
+          <strong>0</strong> ₽ <span>демо бесплатно</span>
+        </div>
+        <ul class="path-features" aria-label="Преимущества формата">
+          <li>
+            <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg>
+            <span>Файл о компании в формате .MD за один вечер</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg>
+            <span>Работает в ChatGPT, Claude, DeepSeek, Cursor</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg>
+            <span>Мгновенная выдача через Telegram-бота</span>
+          </li>
+        </ul>
+        <!-- In-card upgrade module ("апгрейднуться сразу же доплатно") -->
+        <div class="card-upgrade-box">
+          <div class="upgrade-header">
+            <span class="upgrade-chip">Опция апгрейда</span>
+            <strong class="upgrade-price">990 ₽ <small>навсегда</small></strong>
+          </div>
+          <p><b>Полная версия ЕФП:</b> готовая архитектура под ключ, CEO-агент, отделы и журнал без подписки.</p>
+          <a class="upgrade-link" href="https://catalystos.ru/efp" target="_blank" rel="noopener">Купить полную версию за 990 ₽ ↗</a>
+        </div>
+        <div class="path-actions">
+          <a class="button" href="https://t.me/denis_pleada_bot?start=efp_site" target="_blank" rel="noopener">Забрать демо · 0 ₽ ↗</a>
+          <button type="button" class="path-detail-trigger" data-path="efp">Подробнее о формате</button>
+        </div>
+      </article>
+
+      <!-- Card 2: Catalyst OS (Featured) -->
+      <article class="path-card featured" id="card-os" data-path="os" tabindex="0" role="region" aria-label="Catalyst OS">
+        <div class="path-top">
+          <span class="path-badge featured-badge">02 / Взять готовое · Рекомендуем</span>
+          <span class="path-meta">MCP протокол</span>
+        </div>
+        <div class="path-visual mcp-visual" aria-hidden="true">
+          <span class="mcp-endpoint">IDE / Agent</span>
+          <div class="mcp-connection"><i></i><span>MCP</span><i></i></div>
+          <span class="mcp-endpoint mcp-target">Catalyst<sup>os</sup></span>
+        </div>
+        <h3>Catalyst OS</h3>
+        <p>Готовые экраны, навыки и ИИ-сотрудники. Решения строятся прямо на твоих корпоративных данных.</p>
+        <div class="path-price">
+          <strong>9 900</strong> ₽ <span>/ месяц</span>
+        </div>
+        <ul class="path-features" aria-label="Преимущества формата">
+          <li>
+            <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg>
+            <span><b>1 200+</b> готовых корпоративных наработок</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg>
+            <span><b>370+</b> навыков и 100+ ИИ-сотрудников</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg>
+            <span>Подключение по <b>MCP</b> к Cursor / Claude Code за 2 мин</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg>
+            <span>Данные компании остаются строго у вас</span>
+          </li>
+        </ul>
+        <div class="path-actions">
+          <a class="button featured-btn" href="https://catalystos.ru/os">Подключить Catalyst OS ↗</a>
+          <button type="button" class="path-detail-trigger" data-path="os">Что входит в библиотеку</button>
+        </div>
+      </article>
+
+      <!-- Card 3: Course with Denis -->
+      <article class="path-card" id="card-kurs" data-path="kurs" tabindex="0" role="region" aria-label="Курс От чата к агенту">
+        <div class="path-top">
+          <span class="path-badge course-badge">03 / Обучение с автором</span>
+          <span class="path-meta">Сопровождение</span>
+        </div>
+        <div class="path-visual course-visual" aria-hidden="true">
+          <span class="course-step">Чат</span>
+          <svg viewBox="0 0 42 16" aria-hidden="true"><path d="M2 8h36M32 3l6 5-6 5"/></svg>
+          <span class="course-step filled">Агент в компании</span>
+          <small>1 задача → результат</small>
+        </div>
+        <h3>Курс «От чата к агенту»</h3>
+        <p>Доведёшь одну конкретную работу компании до проверенного измеримого результата.</p>
+        <div class="path-price">
+          <strong>29 900</strong> ₽ <span>за весь курс</span>
+        </div>
+        <!-- Gift Banner -->
+        <div class="card-gift-banner">
+          <div class="gift-head">
+            <span class="gift-icon" aria-hidden="true">🎁</span>
+            <span class="gift-badge">Подарок к курсу</span>
+          </div>
+          <p><b>ЕФП навсегда + 1 месяц Catalyst OS</b> (экономия 10 890 ₽)</p>
+        </div>
+        <ul class="path-features" aria-label="Преимущества формата">
+          <li>
+            <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg>
+            <span><b>Личное сопровождение</b> Дениса Леушина</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg>
+            <span><b>Доведёшь 1 задачу</b> до проверенного результата</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg>
+            <span><b>12 месяцев доступа</b> к закрытому сообществу</span>
+          </li>
+        </ul>
+        <div class="path-actions">
+          <a class="button course-btn" href="https://catalystos.ru/kurs">Программа курса ↗</a>
+          <button type="button" class="path-detail-trigger" data-path="kurs">Подробнее о программе</button>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <!-- Secondary View: Unified 3D Warp Stage (Toggleable via switcher) -->
+  <div class="warp-unified-block" id="paths3dWrap" hidden>
     <!-- 3D Stage -->
     <div class="warp-stage-seamless" id="warpContainer" role="region" aria-roledescription="carousel" aria-label="3D орбита путей">
       <canvas id="warpCanvas" aria-hidden="true"></canvas>
@@ -247,6 +395,16 @@
  <div class="demo-content"><div class="report-heading"><div><small>Контроль продаж</small><h3>От заявки до сделки</h3></div><span class="report-period">Демо-данные</span></div><div class="report-metrics"><div><span>Новые обращения</span><strong>124</strong></div><div><span>Закрытые сделки</span><strong>28</strong></div></div><div class="funnel"><div style="--width:100%"><span>Заявки</span><b>124</b></div><div style="--width:78%"><span>В работе</span><b>97</b></div><div style="--width:52%"><span>Предложение</span><b>65</b></div><div style="--width:32%"><span>Сделки</span><b>28</b></div></div><p class="report-insight"><span>↗</span> Воронка помогает увидеть, на каком этапе теряются клиенты.</p></div></div>
  <div class="demo" aria-label="Пример решения: разбор звонка"><div class="demo-top"><span><b class="demo-logo">c.</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4"/></svg> Разбор звонка</span><span class="demo-label">Пример решения</span></div>
  <div class="demo-content"><div class="report-heading"><div><small>Аналитика звонков</small><h3>Суть разговора — перед глазами</h3></div></div><div class="call-wave" aria-hidden="true"></div><div class="call-summary"><span class="call-status">Встреча назначена</span><p>Клиент сравнивает два проекта. Обсудили бюджет, цель покупки и рассрочку. Договорились об онлайн-показе в четверг в 18:00.</p><div><span>Бюджет уточнён</span><span>Потребность выявлена</span><span>Следующий шаг согласован</span></div></div></div></div>
+ <div class="demo" aria-label="Пример решения: ядро компании"><div class="demo-top"><span><b class="demo-logo">c.</b><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Ядро компании</span><span class="demo-label">Кейс PLEADA</span></div>
+ <div class="demo-content"><div class="report-heading"><div><small>Отделы на нейросетях</small><h3>Автоматизация для 10+ застройщиков</h3></div></div><div class="core-pills"><span>База регламентов</span><span>Онбординг команды</span><span>Связка с CRM</span></div><p class="report-insight"><span>↗</span> ИИ-агенты берут 70% рутинных согласований и формируют сводки по первому запросу.</p></div></div>
+ </div>
+ <div class="product-course-bridge">
+   <div class="bridge-info">
+     <span class="eyebrow-label">Связка с обучением</span>
+     <h3>Хочешь собрать такое же ядро для своей компании?</h3>
+     <p>На курсе «От чата к агенту» Денис лично ведёт тебя до результата: от выбора одной задачи до работающего агента в твоём бизнесе.</p>
+   </div>
+   <a class="bridge-action" href="https://catalystos.ru/kurs"><span>На программу курса</span> <i>↗</i></a>
  </div>
  <p class="demo-disclaimer">Учебный пример интерфейса. Данные демонстрационные, к компании не подключён.</p>
  <div class="compatible"><span>Работает с вашими инструментами</span><div><b>Claude Code</b><b>Cursor</b><b>Codex</b><b>ChatGPT</b><span>через MCP ↗</span></div></div>
@@ -290,6 +448,17 @@
         <ul class="warp-modal-features" id="warpModalFeatures">
           <!-- Populated by JS -->
         </ul>
+      </div>
+
+      <div class="warp-modal-upgrade" id="warpModalUpgrade" hidden>
+        <div class="card-upgrade-box">
+          <div class="upgrade-header">
+            <span class="upgrade-chip">Опция апгрейда</span>
+            <strong class="upgrade-price">990 ₽ <small>навсегда</small></strong>
+          </div>
+          <p><b>Полная версия ЕФП:</b> готовая архитектура под ключ, CEO-агент, отделы и журнал навсегда.</p>
+          <a class="upgrade-link" href="https://catalystos.ru/efp" target="_blank" rel="noopener">Купить полную версию за 990 ₽ ↗</a>
+        </div>
       </div>
 
       <div class="warp-modal-footer">
