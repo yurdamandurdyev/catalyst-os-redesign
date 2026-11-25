@@ -3,142 +3,195 @@
   const $$ = selector => [...document.querySelectorAll(selector)];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Routing metadata & styling for interactive chooser
-  const routeMeta = {
+  // Real-time Match Data for Chooser
+  const matchData = {
     efp: {
       name: 'Единый файл правды',
-      badge: '01 / Демо бесплатно · 0 ₽ (апгрейд 990 ₽)',
+      badge: '01 / Быстрый старт · 0 ₽',
+      price: '0 ₽',
+      period: 'демо бесплатно',
+      desc: 'Один файл о компании — нейросеть отвечает строго по твоим правилам без галлюцинаций.',
+      bullets: [
+        'Файл о компании в формате .MD за один вечер',
+        'Работает в любой LLM: ChatGPT, Claude, DeepSeek, Cursor',
+        'Мгновенное получение через Telegram-бота'
+      ],
+      primaryText: 'Забрать демо · 0 ₽',
+      primaryHref: 'https://t.me/denis_pleada_bot?start=efp_site',
+      secondaryText: 'Опция: полная версия за 990 ₽',
+      secondaryHref: 'https://catalystos.ru/efp',
+      scrollTarget: '#card-efp',
       color: '#00c6ff',
-      glow: 'rgba(0, 198, 255, 0.4)',
-      btnText: 'Забрать демо (0 ₽)'
+      glow: 'rgba(0, 198, 255, 0.4)'
     },
     os: {
       name: 'Catalyst OS',
-      badge: '02 / Catalyst OS · 9 900 ₽ / мес',
+      badge: '02 / Взять готовое · Рекомендуем',
+      price: '9 900 ₽',
+      period: '/ месяц',
+      desc: '1 200+ готовых корпоративных наработок и 370+ навыков по MCP. Решения на твоих данных.',
+      bullets: [
+        '1 200+ готовых решений и экранов',
+        'Подключение к Cursor / Claude Code за 2 минуты',
+        'Данные компании остаются строго у вас'
+      ],
+      primaryText: 'Подключить Catalyst OS',
+      primaryHref: 'https://catalystos.ru/os',
+      secondaryText: 'Подробнее о библиотеке',
+      secondaryHref: '#card-os',
+      scrollTarget: '#card-os',
       color: '#2F80ED',
-      glow: 'rgba(47, 128, 237, 0.4)',
-      btnText: 'Открыть Catalyst OS'
+      glow: 'rgba(47, 128, 237, 0.4)'
     },
     kurs: {
       name: 'Курс «От чата к агенту»',
-      badge: '03 / Курс с Денисом · 29 900 ₽',
+      badge: '03 / Обучение с автором',
+      price: '29 900 ₽',
+      period: 'за весь курс',
+      desc: 'Доведёшь одну конкретную работу компании до проверенного измеримого результата с Денисом Леушиным.',
+      bullets: [
+        'Личное сопровождение Дениса Леушина',
+        'Доведёшь 1 боевую задачу до результата',
+        '🎁 В подарок: ЕФП навсегда + 1 месяц Catalyst OS'
+      ],
+      primaryText: 'Программа курса',
+      primaryHref: 'https://catalystos.ru/kurs',
+      secondaryText: 'Подробнее о программе',
+      secondaryHref: '#card-kurs',
+      scrollTarget: '#card-kurs',
       color: '#10b981',
-      glow: 'rgba(16, 185, 129, 0.4)',
-      btnText: 'Программа курса'
+      glow: 'rgba(16, 185, 129, 0.4)'
     }
   };
 
   const chooser = $('#chooserForm') || $('.chooser-form');
-  const progressStat = $('#choiceProgressStat');
-  const progressBar = $('#choiceProgressBar');
-  const progressHint = $('#choiceProgressHint');
-  const resultContainer = $('#choiceResultContainer') || $('.choice-result');
-  const resultBadge = $('#choiceRouteBadge');
-  const resultLinkText = $('#choiceLinkText');
 
-  if (chooser) {
-    chooser.addEventListener('submit', event => event.preventDefault());
-    chooser.addEventListener('change', () => {
+  function updateMatchCard() {
+      if (!chooser) return;
       const answers = new FormData(chooser);
-      const where = answers.get('where'), want = answers.get('want');
-      
-      const count = (where ? 1 : 0) + (want ? 1 : 0);
-      const percent = count === 2 ? 100 : count === 1 ? 50 : 0;
-      
-      if (progressBar) progressBar.style.width = `${percent}%`;
-      if (progressStat) progressStat.textContent = `${count} / 2`;
+      const where = answers.get('where');
+      const want = answers.get('want');
 
-      if (count === 0) {
-        if (progressHint) progressHint.textContent = 'Выберите, где вы работаете с нейросетью';
-        $('#choiceResult').textContent = 'Выбери ответы на два вопроса выше';
-        $('#choiceHint').textContent = 'Подберём один из 3 форматов под твой уровень и задачи.';
-        $('#choiceLink').hidden = true;
-        if (resultBadge) resultBadge.hidden = true;
-        if (resultContainer) resultContainer.classList.remove('has-result');
+      const cardEl = $('#chooserResultCard');
+      const kickerEl = $('#matchKicker');
+      const titleEl = $('#matchTitle');
+      const priceBadgeEl = $('#matchPriceBadge');
+      const descEl = $('#matchDesc');
+      const bulletsEl = $('#matchBullets');
+      const actionsEl = $('#matchActions');
+      const primaryBtn = $('#matchPrimaryBtn');
+      const primaryText = $('#matchPrimaryText');
+      const scrollLink = $('#matchScrollLink');
+
+      // State 1: Nothing selected yet (clean default state matching reference Image 3)
+      if (!where && !want) {
+        if (kickerEl) kickerEl.textContent = 'РЕКОМЕНДАЦИЯ';
+        if (titleEl) titleEl.textContent = 'Выбери ответы на два вопроса выше';
+        if (priceBadgeEl) priceBadgeEl.hidden = true;
+        if (descEl) descEl.textContent = 'Подберём один из 3 форматов под твой уровень и задачи.';
+        if (bulletsEl) bulletsEl.hidden = true;
+        if (actionsEl) actionsEl.hidden = true;
+        if (cardEl) cardEl.classList.remove('has-match');
         return;
       }
 
-      if (count === 1) {
-        if (progressHint) progressHint.textContent = where ? 'Шаг 2: выберите желаемый темп' : 'Шаг 1: укажите текущую среду';
-        $('#choiceResult').textContent = 'Остался ещё один вопрос выше';
-        $('#choiceHint').textContent = where ? 'Выбери желаемый формат во 2-м блоке' : 'Укажи текущую среду в 1-м блоке';
-        $('#choiceLink').hidden = true;
-        if (resultBadge) resultBadge.hidden = true;
-        if (resultContainer) resultContainer.classList.remove('has-result');
+      // State 2: One question answered, waiting for second
+      if (!where || !want) {
+        if (kickerEl) kickerEl.textContent = 'ПОДБОР В ПРОЦЕССЕ';
+        if (titleEl) titleEl.textContent = !where ? 'Остался вопрос 01: Где ты работаешь с ИИ?' : 'Остался вопрос 02: Как ты хочешь двигаться?';
+        if (priceBadgeEl) priceBadgeEl.hidden = true;
+        if (descEl) descEl.textContent = 'Выбери второй ответ — сразу покажем точный маршрут и кнопку доступа.';
+        if (bulletsEl) bulletsEl.hidden = true;
+        if (actionsEl) actionsEl.hidden = true;
+        if (cardEl) cardEl.classList.remove('has-match');
         return;
       }
 
-      // Both answered (count === 2)
-      if (progressHint) progressHint.textContent = 'Готово! Оптимальный маршрут найден';
-      const route = want === 'learn' ? 'kurs' : want === 'ready' && where === 'agent' ? 'os' : 'efp';
-      const meta = routeMeta[route] || routeMeta.efp;
-
-      $('#choiceResult').textContent = `Твой путь: ${meta.name}`;
-      $('#choiceHint').textContent = where === 'chat' && want === 'ready' 
-        ? 'Сначала забрать файл правды, затем подключить готовую базу Catalyst OS.' 
-        : 'Оптимальный старт под твой текущий уровень и задачи компании.';
-      
-      if (resultBadge) {
-        resultBadge.textContent = meta.badge;
-        resultBadge.hidden = false;
-        resultBadge.style.color = meta.color;
-        resultBadge.style.borderColor = meta.color;
+      // State 3: Both questions answered — render recommendation
+      let route = 'efp';
+      if (want === 'learn') {
+        route = 'kurs';
+      } else if (want === 'ready') {
+        route = 'os';
+      } else {
+        route = 'efp';
       }
 
-      if (resultContainer) {
-        resultContainer.style.setProperty('--route-color', meta.color);
-        resultContainer.style.setProperty('--route-glow', meta.glow);
-        resultContainer.classList.add('has-result');
+      const data = matchData[route] || matchData.efp;
+
+      if (kickerEl) kickerEl.textContent = data.badge;
+      if (titleEl) titleEl.textContent = data.name;
+      if (priceBadgeEl) {
+        priceBadgeEl.hidden = false;
+        priceBadgeEl.textContent = data.price + (data.period ? ' · ' + data.period : '');
+      }
+      if (descEl) descEl.textContent = data.desc;
+
+      if (bulletsEl) {
+        bulletsEl.hidden = false;
+        bulletsEl.innerHTML = data.bullets.map(b => `
+          <li>
+            <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg>
+            <span>${b}</span>
+          </li>
+        `).join('');
       }
 
-      const choiceLink = $('#choiceLink');
-      if (choiceLink) {
-        choiceLink.hidden = false;
-        choiceLink.href = '#start';
-        choiceLink.dataset.route = route;
-        if (resultLinkText) resultLinkText.textContent = meta.btnText;
+      if (actionsEl) actionsEl.hidden = false;
+      if (primaryBtn) primaryBtn.href = data.primaryHref;
+      if (primaryText) primaryText.textContent = data.primaryText;
+      if (scrollLink) scrollLink.href = data.scrollTarget;
+
+      if (cardEl) {
+        cardEl.style.setProperty('--match-color', data.color);
+        cardEl.style.setProperty('--match-glow', data.glow);
+        cardEl.classList.add('has-match');
+        cardEl.classList.remove('match-updated');
+        void cardEl.offsetWidth; // trigger reflow
+        cardEl.classList.add('match-updated');
       }
-    });
-
-    const choiceLink = $('#choiceLink');
-    if (choiceLink) {
-      choiceLink.addEventListener('click', event => {
-        event.preventDefault();
-        const route = event.currentTarget.dataset.route || 'efp';
-        const routeMap = { efp: 0, os: 1, kurs: 2 };
-        const targetIdx = routeMap[route] !== undefined ? routeMap[route] : 0;
-        
-        // If 3D view is active, spin to it; otherwise highlight card in grid
-        const gridWrap = document.getElementById('pathsGridWrap');
-        const is3DActive = gridWrap && gridWrap.hidden;
-
-        if (is3DActive) {
-          if (window.warpCarousel) {
-            window.warpCarousel.setIndex(targetIdx);
-          }
-          const target = document.getElementById('start');
-          if (target) {
-            target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
-          }
-          setTimeout(() => {
-            if (window.warpCarousel && window.warpCarousel.openModal) {
-              window.warpCarousel.openModal(targetIdx);
-            }
-          }, 650);
-        } else {
-          const targetCard = document.getElementById(`card-${route}`);
-          if (targetCard) {
-            targetCard.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
-            targetCard.classList.add('card-target-highlight');
-            setTimeout(() => targetCard.classList.remove('card-target-highlight'), 2200);
-          } else {
-            const target = document.getElementById('start');
-            if (target) target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
-          }
-        }
-      });
     }
-  }
+
+    if (chooser) {
+      chooser.addEventListener('submit', event => event.preventDefault());
+      chooser.addEventListener('change', updateMatchCard);
+      // Initial populate on load
+      updateMatchCard();
+
+      const scrollLink = $('#matchScrollLink');
+      if (scrollLink) {
+        scrollLink.addEventListener('click', e => {
+          const href = scrollLink.getAttribute('href');
+          if (href && href.startsWith('#card-')) {
+            e.preventDefault();
+            const route = href.replace('#card-', '');
+            const routeIdxMap = { efp: 0, os: 1, kurs: 2 };
+            const targetIdx = routeIdxMap[route] !== undefined ? routeIdxMap[route] : 0;
+
+            const gridWrap = document.getElementById('pathsGridWrap');
+            const is3DActive = gridWrap && gridWrap.hidden;
+
+            if (is3DActive && window.warpCarousel) {
+              window.warpCarousel.setIndex(targetIdx);
+              const startSec = document.getElementById('start');
+              if (startSec) startSec.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+              setTimeout(() => {
+                if (window.warpCarousel && window.warpCarousel.openModal) {
+                  window.warpCarousel.openModal(targetIdx);
+                }
+              }, 650);
+            } else {
+              const targetCard = document.querySelector(href);
+              if (targetCard) {
+                targetCard.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+                targetCard.classList.add('card-target-highlight');
+                setTimeout(() => targetCard.classList.remove('card-target-highlight'), 2200);
+              }
+            }
+          }
+        });
+      }
+    }
 
   // Paths View Switcher: "Все 3 пути" vs "3D-орбита"
   const viewGridBtn = $('#viewGridBtn');
